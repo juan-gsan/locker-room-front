@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { User } from 'src/models/user';
 
 @Component({
@@ -10,7 +9,7 @@ import { User } from 'src/models/user';
 })
 export class SignupComponent {
   signup: FormGroup;
-  constructor(public formBuilder: FormBuilder, private router: Router) {
+  constructor(public formBuilder: FormBuilder) {
     this.signup = formBuilder.group({
       userName: ['', [Validators.required]],
       email: ['', [Validators.required]],
@@ -21,7 +20,7 @@ export class SignupComponent {
     });
   }
 
-  handleSubmit() {
+  handleSignup() {
     const newUser: Partial<User> = {
       userName: this.signup.value.userName,
       email: this.signup.value.email,
