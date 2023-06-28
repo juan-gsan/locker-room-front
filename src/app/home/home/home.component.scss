@@ -1,0 +1,12 @@
+section {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  height: 100vh;
+  justify-content: flex-end;
+  gap: 1rem;
+  button {
+    width: 30%;
+    margin: 0 auto;
+  }
+}
