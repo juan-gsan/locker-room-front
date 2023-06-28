@@ -7,12 +7,14 @@ import { HomeModule } from './home/home.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserModule } from './user/user.module';
 import { CommonsModule } from './commons/commons.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     LayoutModule,
     HomeModule,
     UserModule,

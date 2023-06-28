@@ -1,12 +1,12 @@
 <section class="signup">
   <a><img alt="" /></a>
-  <form [formGroup]="signup" (submit)="handleSignup()">
+  <form class="signup-form" [formGroup]="signup" (submit)="handleSignup()">
     <label for="userName">Username</label>
-    <input type="text" id="userName" formControlName="userName">
+    <input type="text" id="userName" formControlName="userName" required>
     <label for="email">Email</label>
-    <input type="email" id="email" formControlName="email">
+    <input type="email" id="email" formControlName="email" required>
     <label for="level">Level</label>
-    <select id="level" formControlName="level">
+    <select id="level" formControlName="level" required>
       <option value="">Choose an option</option>
       <option value="1">1</option>
       <option value="2">2</option>
@@ -15,16 +15,16 @@
       <option value="5">5</option>
     </select>
     <label for="gender">Gender</label>
-    <select id="gender" formControlName="gender">
+    <select id="gender" formControlName="gender" required>
       <option value="">Choose an option</option>
       <option value="female">Female</option>
       <option value="male">Male</option>
       <option value="mixed">Mixed</option>
     </select>
     <label for="avatar">Profile picture</label>
-    <input type="file" id="avatar" formControlName="avatar">
+    <input type="file" id="avatar" formControlName="avatar" required>
     <label for="password">Password</label>
-    <input type="password" id="password" formControlName="password">
+    <input type="password" id="password" formControlName="password" required>
     <button type="submit">Sign Up</button>
   </form>
   <p>Already have an account?</p>
