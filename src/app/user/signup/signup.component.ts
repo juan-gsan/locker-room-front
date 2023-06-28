@@ -29,16 +29,17 @@ export class SignupComponent {
     });
   }
 
-  // handleFileInput(event: Event) {
-  //   const fileInput = event.target as HTMLInputElement;
-  //   const file: File | null = fileInput.files ? fileInput.files[0] : null;
-  //   if (file) {
-  //     const avatarFormControl = this.signup.get('avatar') as FormControl;
-  //     avatarFormControl.setValue(file);
-  //     console.log(avatarFormControl);
-  //     console.log(file);
-  //   }
-  // }
+  handleFileInput(event: Event) {
+    const fileInput: HTMLInputElement = event.target as HTMLInputElement;
+    const files: FileList | null = fileInput.files;
+    console.log(files);
+    if (files) {
+      const avatarFormControl = this.signup.get('avatar') as FormControl;
+      console.log(avatarFormControl);
+      avatarFormControl.setValue(files.item);
+      console.log(avatarFormControl);
+    }
+  }
 
   handleSignup() {
     const newUser: Partial<User> = {

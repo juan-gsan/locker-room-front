@@ -22,7 +22,7 @@
       <option value="mixed">Mixed</option>
     </select>
     <label for="avatar">Profile picture</label>
-    <input type="file" id="avatar" formControlName="avatar" required>
+    <input type="file" id="avatar" formControlName="avatar" (change)="handleFileInput($event)">
     <label for="password">Password</label>
     <input type="password" id="password" formControlName="password" required>
     <button type="submit">Sign Up</button>

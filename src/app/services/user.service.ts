@@ -12,7 +12,7 @@ export class UserService {
   token$: BehaviorSubject<Token>;
 
   constructor(private http: HttpClient) {
-    const initialToken = { result: { token: '' } };
+    const initialToken = { token: '', user: {} };
     this.token$ = new BehaviorSubject(initialToken);
   }
 

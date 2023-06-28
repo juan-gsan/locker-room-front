@@ -1,3 +1,6 @@
+import { User } from 'src/models/user';
+
 export type Token = {
-  result: { token: string };
+  token: string;
+  user: Partial<User>;
 };
