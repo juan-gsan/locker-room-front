@@ -12,7 +12,11 @@ import { UserLogged } from 'src/types/user.logged';
 })
 export class LoginComponent implements OnInit {
   login: FormGroup;
-  userLogged: UserLogged = { id: '', email: '', userName: '' };
+  userLogged: UserLogged = {
+    id: '',
+    email: '',
+    userName: '',
+  };
   constructor(
     public formBuilder: FormBuilder,
     private userService: UserService,
@@ -38,7 +42,7 @@ export class LoginComponent implements OnInit {
     this.userService.userLogin(loggedUser).subscribe((token) => {
       this.userService.token$.next(token);
       localStorage.setItem('userToken', JSON.stringify(token));
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl('game');
     });
   }
 }

@@ -1,0 +1,19 @@
+<section class="game-detail">
+  <div class="game-card">
+    <p>{{ this.game.location }}</p>
+    <p>{{ this.game.schedule }}</p>
+    <p>{{ this.game.gameType }}</p>
+    <p>{{ this.game.level }}</p>
+    <p>{{ this.game.gender }}</p>
+    <p>{{ this.game.spotsLeft}}</p>
+    <p>{{ this.game.players }}</p>
+    <p>{{ this.game.owner }}</p>
+  </div>
+  <div class="button">
+    <!-- <button class="edit-button" *ngIf="game.owner === TOKEN.ID; else notOwnerContent">Join Game</button>
+    <ng-template #notOwnerContent> -->
+    <button class="join-button">Join Game</button>
+    <!-- </ng-template> -->
+
+  </div>
+</section>

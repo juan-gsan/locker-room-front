@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class SignupComponent {
   signup: FormGroup;
   constructor(
     public formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     this.signup = formBuilder.group({
       userName: ['', [Validators.required]],
@@ -50,5 +52,6 @@ export class SignupComponent {
     console.log(data);
 
     this.userService.userRegister(data).subscribe();
+    this.router.navigateByUrl('');
   }
 }

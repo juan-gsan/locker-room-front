@@ -14,13 +14,18 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('OnInit executed');
+    this.getInitialToken();
+  }
+
+  getInitialToken() {
     const localStorageString = localStorage.getItem('userToken');
+
     if (!localStorageString) return console.log('No token');
-    const { token } = JSON.parse(localStorageString);
-    const userLoggedData: UserLogged = jwtDecode(token);
+    const userInfo = JSON.parse(localStorageString);
+    console.log(userInfo);
+    const userLoggedData: UserLogged = jwtDecode(userInfo.token);
     console.log(userLoggedData);
-    console.log(token);
-    this.userService.token$.next(token);
-    this.router.navigateByUrl('');
+    this.userService.token$.next(userInfo);
+    console.log(this.userService.token$);
   }
 }

@@ -1,0 +1,12 @@
+<section class="game-list">
+  <h2>GAMES</h2>
+  <ul *ngFor="let game of games">
+    <li>
+      <p>{{ game.location }}</p>
+      <p>{{ game.schedule }}</p>
+      <p>{{ game.gameType }}</p>
+      <p>{{ game.level }}</p>
+      <p>{{ game.gender }}</p>
+    </li>
+  </ul>
+</section>
