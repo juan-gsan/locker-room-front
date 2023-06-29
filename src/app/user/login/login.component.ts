@@ -1,4 +1,5 @@
-import { Component, NgZone } from '@angular/core';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
@@ -9,13 +10,12 @@ import { UserLogged } from 'src/types/user.logged';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   login: FormGroup;
   userLogged: UserLogged = { id: '', email: '', userName: '' };
   constructor(
     public formBuilder: FormBuilder,
     private userService: UserService,
-    private zone: NgZone,
     private router: Router
   ) {
     this.login = formBuilder.group({
@@ -24,24 +24,21 @@ export class LoginComponent {
     });
   }
 
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  ngOnInit(): void {
+    this.userService.token$.subscribe((token) => console.log(token));
+  }
+
   handleLogin() {
     const loggedUser = {
-      user: this.login.value.user as string,
-      password: this.login.value.password as string,
+      user: this.login.value.user,
+      password: this.login.value.password,
     };
 
     this.userService.userLogin(loggedUser).subscribe((token) => {
-      this.zone.run(() => {
-        this.router.navigateByUrl('');
-      });
-
+      this.userService.token$.next(token);
       localStorage.setItem('userToken', JSON.stringify(token));
-      console.log(token);
-      this.userLogged.id = token.user.id as string;
-      this.userLogged.email = token.user.email as string;
-      this.userLogged.userName = token.user.userName as string;
+      this.router.navigateByUrl('');
     });
-    console.log(loggedUser);
-    console.log(this.userLogged);
   }
 }

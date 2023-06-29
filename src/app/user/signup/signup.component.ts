@@ -6,7 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
-import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-signup',
@@ -32,27 +31,24 @@ export class SignupComponent {
   handleFileInput(event: Event) {
     const fileInput: HTMLInputElement = event.target as HTMLInputElement;
     const files: FileList | null = fileInput.files;
-    console.log(files);
     if (files) {
+      console.log(files[0]);
       const avatarFormControl = this.signup.get('avatar') as FormControl;
-      console.log(avatarFormControl);
-      avatarFormControl.setValue(files.item);
+      avatarFormControl.setValue(files[0]);
       console.log(avatarFormControl);
     }
   }
 
   handleSignup() {
-    const newUser: Partial<User> = {
-      userName: this.signup.value.userName,
-      email: this.signup.value.email,
-      level: this.signup.value.level,
-      gender: this.signup.value.gender,
-      avatar: this.signup.value.avatar,
-      password: this.signup.value.password,
-    };
+    const data = new FormData();
+    data.append('avatar', this.signup.value.avatar);
+    data.append('userName', this.signup.get('userName')?.value);
+    data.append('email', this.signup.get('email')?.value);
+    data.append('level', this.signup.get('level')?.value);
+    data.append('gender', this.signup.get('gender')?.value);
+    data.append('password', this.signup.get('password')?.value);
+    console.log(data);
 
-    console.log(newUser);
-
-    this.userService.userRegister(newUser).subscribe();
+    this.userService.userRegister(data).subscribe();
   }
 }

@@ -6,5 +6,5 @@ export interface SportsField {
   name: string;
   gameType: GameType;
   location: string;
-  picture: Image;
+  avatar: Image;
 }

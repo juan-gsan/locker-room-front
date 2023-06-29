@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import jwtDecode from 'jwt-decode';
 import { UserLogged } from 'src/types/user.logged';
 import { Router } from '@angular/router';
+import { UserService } from './services/user.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = '202304-FinalProjectFront-Juan-Garcia';
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
     console.log('OnInit executed');
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
     const userLoggedData: UserLogged = jwtDecode(token);
     console.log(userLoggedData);
     console.log(token);
+    this.userService.token$.next(token);
     this.router.navigateByUrl('');
   }
 }

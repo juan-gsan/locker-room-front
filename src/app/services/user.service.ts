@@ -16,7 +16,7 @@ export class UserService {
     this.token$ = new BehaviorSubject(initialToken);
   }
 
-  userRegister(user: Partial<User>): Observable<User> {
+  userRegister(user: FormData): Observable<User> {
     return this.http
       .post<User>(this.url + '/register', user)
       .pipe(catchError(this.handleError));
