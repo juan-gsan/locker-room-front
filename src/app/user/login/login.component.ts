@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngOnInit(): void {
     this.userService.token$.subscribe((token) => console.log(token));
   }

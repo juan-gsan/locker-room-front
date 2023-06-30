@@ -1,12 +1,14 @@
 <section class="login">
   <a><img alt="" /></a>
-  <form [formGroup]="login" (submit)="handleLogin()">
+  <form class="login-form" [formGroup]="login" (submit)="handleLogin()">
     <label for="user">Username or email address</label>
     <input type="text" id="user" formControlName="user" required>
     <label for="password">Password</label>
     <input type="password" id="password" formControlName="password" required>
     <button type="submit">Log In</button>
   </form>
-  <p>Do not have an account?</p>
-  <span><a routerLink="/signup">Sign Up</a></span>
+  <div>
+    <span>Do not have an account?</span>
+    <span><a routerLink="/signup">Sign Up</a></span>
+  </div>
 </section>

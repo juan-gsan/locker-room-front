@@ -8,7 +8,7 @@ import { Game } from 'src/models/game';
   styleUrls: ['./game.list.component.scss'],
 })
 export class GameListComponent implements OnInit {
-  games: Game[] = [];
+  items: Game[] = [];
   constructor(public gameService: GameService) {}
 
   ngOnInit(): void {
@@ -17,7 +17,7 @@ export class GameListComponent implements OnInit {
 
   loadAllGames(): void {
     this.gameService.getAllGames().subscribe((games) => {
-      this.games = games;
+      this.items = games;
       console.log(games);
       this.gameService.games$.next(games);
     });

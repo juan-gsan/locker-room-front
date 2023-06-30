@@ -1,0 +1,22 @@
+section {
+  background-color: black;
+  margin-top: 1rem;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  ul {
+    a {
+      text-decoration: none;
+    }
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+    div {
+      text-align: center;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+    }
+  }
+}

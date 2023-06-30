@@ -1,5 +1,6 @@
 <section class="signup">
   <a><img alt="" /></a>
+
   <form class="signup-form" [formGroup]="signup" (submit)="handleSignup()">
     <label for="userName">Username</label>
     <input type="text" id="userName" formControlName="userName" name="userName" required>
@@ -28,6 +29,8 @@
     <input type="password" id="password" formControlName="password" name="password" required>
     <button type="submit">Sign Up</button>
   </form>
-  <p>Already have an account?</p>
-  <span><a routerLink="/login">Log In</a></span>
+  <div>
+    <span>Already have an account?</span>
+    <span><a routerLink="/login">Log In</a></span>
+  </div>
 </section>

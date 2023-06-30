@@ -1,0 +1,11 @@
+<section class="menu-list">
+  <ul>
+    <li *ngFor="let item of menuOptions">
+      <a [routerLink]="item.path">
+        <div>
+          <img src="assets/{{item.image}}.png" alt="{{item.label}}">
+          <p>{{item.label}}</p>
+        </div>
+      </a>
+  </ul>
+</section>

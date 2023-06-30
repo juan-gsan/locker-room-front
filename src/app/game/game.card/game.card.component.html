@@ -10,10 +10,11 @@
     <p>{{ this.game.owner }}</p>
   </div>
   <div class="button">
-    <!-- <button class="edit-button" *ngIf="game.owner === TOKEN.ID; else notOwnerContent">Join Game</button>
+    <!-- <button class="edit-button" *ngIf="game.owner === TOKEN.ID; else notOwnerContent">Edit Game</button>
+    <button class="delete-button" *ngIf="game.owner === TOKEN.ID; else notOwnerContent">Delete Game</button>
     <ng-template #notOwnerContent> -->
     <button class="join-button">Join Game</button>
     <!-- </ng-template> -->
-
   </div>
+  <app-menu></app-menu>
 </section>

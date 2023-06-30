@@ -1,0 +1,50 @@
+.login {
+  background-color: rgba(0, 0, 0, 0.55);
+  height: 100%;
+  width: 100%;
+
+  div {
+    text-align: center;
+    span {
+      color: lightgray;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 1rem;
+      font-size: 0.8rem;
+      a {
+        text-decoration: none;
+        color: white;
+      }
+    }
+  }
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: auto;
+    label {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: lightgray;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    select {
+      padding: 0.2rem;
+      border-radius: 20px;
+    }
+
+    input {
+      padding: 0.2rem;
+      border-radius: 20px;
+      margin-bottom: 0.5rem;
+    }
+
+    button {
+      background-color: white;
+      border-radius: 20px;
+      padding: 0.5rem;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+}

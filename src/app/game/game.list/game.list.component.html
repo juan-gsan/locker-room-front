@@ -1,12 +1,23 @@
 <section class="game-list">
-  <h2>GAMES</h2>
-  <ul *ngFor="let game of games">
-    <li>
-      <p>{{ game.location }}</p>
-      <p>{{ game.schedule }}</p>
-      <p>{{ game.gameType }}</p>
-      <p>{{ game.level }}</p>
-      <p>{{ game.gender }}</p>
+  <div class="title-games">
+    <h2>GAMES</h2>
+  </div>
+  <ul>
+    <li *ngFor="let item of items">
+      <a [routerLink]="item.id">
+        <div class="item-container">
+          <img class="image-game" src="assets/field01.jpg" alt="" height="150px" />
+          <div class="info-game">
+            <p class="location">{{ item.location }}</p>
+            <p>{{ item.schedule.toString().slice(0,-14) }}</p>
+            <p>{{ item.schedule.toString().slice(0,-8).slice(11) }}</p>
+            <p>Type: {{ item.gameType }}</p>
+            <p>Level: {{ item.level }}/5</p>
+            <p>Gender: {{ item.gender }}</p>
+          </div>
+        </div>
+      </a>
     </li>
   </ul>
+  <app-menu></app-menu>
 </section>

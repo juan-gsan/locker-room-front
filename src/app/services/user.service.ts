@@ -28,6 +28,10 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  // userLogout(): void {
+  //   this.token$.subscribe()
+  // }
+
   handleError(error: HttpErrorResponse) {
     return throwError(() => `${error.statusText}`);
   }
