@@ -14,7 +14,6 @@ import { GameFormComponent } from './game.form/game.form.component';
     GameCardComponent,
     GameFormComponent,
     MenuComponent,
-    GameFormComponent,
   ],
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
 })

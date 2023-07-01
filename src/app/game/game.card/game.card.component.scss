@@ -1,48 +1,59 @@
 section {
   background-color: white;
   height: 100%;
-  .title-games {
-    text-align: center;
-    margin: 2rem;
-    font-size: 1rem;
-    font-weight: bold;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  .back-arrow {
+    position: absolute;
+    left: 0.5rem;
+    top: 1rem;
   }
 
-  ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-
-    li {
-      a {
-        text-decoration: none;
-      }
-      width: 90%;
-      .item-container {
-        display: flex;
-        background-color: black;
-        color: white;
-        border-radius: 20px;
-        padding: 1rem;
-        .image-game {
-          width: 40%;
-          object-fit: cover;
-          border-radius: 10px 0 0 10px;
-        }
-        .info-game {
-          width: 60%;
-          margin-left: 1rem;
-          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-          p {
-            margin: 0.5rem;
-          }
-          .location {
-            font-weight: bold;
-          }
-        }
-      }
+  .game-title {
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    max-width: 275px;
+    p {
+      margin: 0.75rem;
     }
   }
+  .game-card {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    max-width: 250px;
+    p {
+      margin: 0.5rem;
+    }
+  }
+
+  .join-button {
+    background-color: black;
+    color: white;
+    padding: 0.5rem 2rem;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
+  .edit-button {
+    background-color: black;
+    color: white;
+    padding: 0.5rem 2rem;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-right: 0.5rem;
+  }
+
+  .delete-button {
+    background-color: black;
+    color: white;
+    padding: 0.5rem 2rem;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: 0.5rem;
+  }
+  margin-bottom: 1rem;
 }

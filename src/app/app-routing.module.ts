@@ -13,8 +13,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'game', component: GameListComponent },
   { path: 'game/:id', component: GameCardComponent },
-  { path: 'game/create', component: GameFormComponent },
-  { path: 'game/edit', component: GameFormComponent },
+  { path: 'game/create/:id', component: GameFormComponent },
+  { path: 'game/edit/:id', component: GameFormComponent },
 ];
 
 @NgModule({

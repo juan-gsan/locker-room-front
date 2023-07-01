@@ -1,20 +1,31 @@
 <section class="game-detail">
-  <div class="game-card">
+  <div class="back-arrow">
+    <a routerLink="/game">
+      <img src="assets/back.arrow.png" alt="back-arrow" height="50">
+    </a>
+  </div>
+  <div class="game-picture">
+    <img class="game-image" src="assets/field01.jpg" alt="" height="400" />
+  </div>
+  <div class="game-title">
     <p>{{ this.game.location }}</p>
-    <p>{{ this.game.schedule }}</p>
-    <p>{{ this.game.gameType }}</p>
-    <p>{{ this.game.level }}</p>
-    <p>{{ this.game.gender }}</p>
-    <p>{{ this.game.spotsLeft}}</p>
-    <p>{{ this.game.players }}</p>
-    <p>{{ this.game.owner }}</p>
+    <p>{{ this.game.schedule.toString().slice(0,-14) }}</p>
+    <p>{{ this.game.schedule.toString().slice(0,-8).slice(11) }}</p>
+  </div>
+  <div class="game-card">
+    <p>Game type: {{ this.game.gameType }}</p>
+    <p>Level: {{ this.game.level }}/5</p>
+    <p>Gender: {{ this.game.gender }}</p>
+    <p>Owner: {{ this.game.owner.userName }}</p>
+    <p>Spots: {{ this.game.spotsLeft}}</p>
+    <!-- <p>Players:</p>
+    <p *ngFor="let item of this.game.players">{{ item.userName }}</p> -->
   </div>
   <div class="button">
-    <!-- <button class="edit-button" *ngIf="game.owner === TOKEN.ID; else notOwnerContent">Edit Game</button>
-    <button class="delete-button" *ngIf="game.owner === TOKEN.ID; else notOwnerContent">Delete Game</button>
-    <ng-template #notOwnerContent> -->
-    <button class="join-button">Join Game</button>
-    <!-- </ng-template> -->
+    <button class="join-button" *ngIf="isLogged && !isOwner" (click)="handleJoin()">Join Game</button>
+    <button class="edit-button" *ngIf="isLogged && isOwner">Edit Game</button>
+    <button class="delete-button" *ngIf="isLogged && isOwner">Delete Game</button>
   </div>
-  <app-menu></app-menu>
+
 </section>
+<app-menu></app-menu>

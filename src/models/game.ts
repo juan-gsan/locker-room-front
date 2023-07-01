@@ -13,5 +13,5 @@ export interface Game {
   spotsLeft: number;
   location: SportsField;
   owner: User;
-  players: User[];
+  players: Partial<User>[];
 }

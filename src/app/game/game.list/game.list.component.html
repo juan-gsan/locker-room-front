@@ -3,7 +3,7 @@
     <h2>GAMES</h2>
   </div>
   <ul>
-    <li *ngFor="let item of items">
+    <li *ngFor="let item of gameService.games$ | async">
       <a [routerLink]="item.id">
         <div class="item-container">
           <img class="image-game" src="assets/field01.jpg" alt="" height="150px" />
@@ -19,5 +19,6 @@
       </a>
     </li>
   </ul>
-  <app-menu></app-menu>
+
 </section>
+<app-menu></app-menu>

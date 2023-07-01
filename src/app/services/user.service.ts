@@ -28,9 +28,11 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
-  // userLogout(): void {
-  //   this.token$.subscribe()
-  // }
+  userLogout(): void {
+    const initialToken = { token: '', user: {} };
+    this.token$.next(initialToken);
+    localStorage.removeItem('userToken');
+  }
 
   handleError(error: HttpErrorResponse) {
     return throwError(() => `${error.statusText}`);

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from '../services/user.service';
 
 type MenuOptions = {
   path: string;
@@ -13,12 +14,19 @@ type MenuOptions = {
 })
 export class MenuComponent {
   menuOptions: MenuOptions[];
-
-  constructor() {
+  constructor(private userService: UserService) {
     this.menuOptions = [
       { path: '/', label: 'Log Out', image: 'log.out' },
-      { path: '/game/:id', label: 'New Game', image: 'new.game' },
+      { path: this.getNewGamePath(), label: 'New Game', image: 'new.game' },
       { path: '/game', label: 'Explore', image: 'explore' },
     ];
+  }
+
+  getNewGamePath(): string {
+    return '/game/create/' + this.userService.token$.value.user.id;
+  }
+
+  handleLogout() {
+    this.userService.userLogout();
   }
 }

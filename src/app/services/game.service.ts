@@ -1,4 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { Game } from 'src/models/game';
@@ -13,15 +17,12 @@ export class GameService {
   private url = 'http://localhost:9999/game/';
   games$: BehaviorSubject<Game[]>;
   game$: BehaviorSubject<Game>;
-  currentUserId: string | undefined;
+
   constructor(private http: HttpClient, private userService: UserService) {
     const initialGames: Game[] = [];
     const initialGame: Game = {} as Game;
     this.games$ = new BehaviorSubject(initialGames);
     this.game$ = new BehaviorSubject(initialGame);
-    this.userService.token$.subscribe(
-      (id) => (this.currentUserId = id.user.id)
-    );
   }
 
   getAllGames(): Observable<Game[]> {
@@ -38,11 +39,42 @@ export class GameService {
   }
 
   createGame(game: Partial<Game>) {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      'Bearer ' + this.userService.token$.value.token
+    );
     return this.http
-      .post<Game>(this.url + this.currentUserId, game)
+      .post(this.url + 'create', game, { headers })
       .pipe(catchError(this.handleError));
   }
 
+  joinGame(id: string, game: Partial<Game>) {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      'Bearer ' + this.userService.token$.value.token
+    );
+    return this.http
+      .patch(this.url + id, game, { headers })
+      .pipe(catchError(this.handleError));
+  }
+
+  editGame(id: string, game: Partial<Game>) {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      'Bearer ' + this.userService.token$.value.token
+    );
+    return this.http
+      .patch(this.url + 'edit/' + id, game, { headers })
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteGame(id: string) {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      'Bearer ' + this.userService.token$.value.token
+    );
+    return this.http.delete(this.url + id, { headers });
+  }
   handleError(error: HttpErrorResponse) {
     return throwError(() => `${error.statusText}`);
   }

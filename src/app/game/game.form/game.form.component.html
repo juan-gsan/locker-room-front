@@ -1,6 +1,6 @@
 <section class="card-form-container">
   <p>New Game</p>
-  <form class="card-form">
+  <form class="card-form" [formGroup]="game" (submit)="handleGame()">
     <label for=" location">Location</label>
     <input type="text" id="location" formControlName="location" name="location" required>
     <label for="date">Schedule</label>
@@ -8,9 +8,9 @@
     <label for="type">Type</label>
     <select id="type" formControlName="type" name="type" required>
       <option value="">Choose an option</option>
-      <option value="f11">11 vs 11</option>
-      <option value="f7">7 vs 7</option>
-      <option value="f5">5 vs 5</option>
+      <option value="f11">f11</option>
+      <option value="f7">f7</option>
+      <option value="f5">f5</option>
     </select>
     <label for="level">Level</label>
     <select id="level" formControlName="level" name="level" required>
@@ -30,5 +30,5 @@
     </select>
     <button type="submit">Create Game</button>
   </form>
-  <app-menu></app-menu>
 </section>
+<app-menu></app-menu>

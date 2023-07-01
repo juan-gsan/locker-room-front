@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
 
     if (!localStorageString) return console.log('No token');
     const userInfo = JSON.parse(localStorageString);
-    console.log(userInfo);
     const userLoggedData: UserLogged = jwtDecode(userInfo.token);
     console.log(userLoggedData);
     this.userService.token$.next(userInfo);
