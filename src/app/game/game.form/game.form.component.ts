@@ -10,6 +10,7 @@ import { GameService } from 'src/app/services/game.service';
 })
 export class GameFormComponent {
   game: FormGroup;
+  isNew = false;
   constructor(
     public formBuilder: FormBuilder,
     private gameService: GameService,
@@ -22,6 +23,11 @@ export class GameFormComponent {
       level: ['', [Validators.required]],
       gender: ['', [Validators.required]],
     });
+  }
+
+  checkNew() {
+    console.log(this.isNew);
+    this;
   }
 
   handleGame() {

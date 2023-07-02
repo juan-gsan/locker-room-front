@@ -11,4 +11,11 @@ main {
   background-size: cover;
   background-position: top;
   background-repeat: no-repeat;
+
+  @media (min-width: 500px) {
+    background-image: url("../../../assets/home.background.desktop.jpg");
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+  }
 }

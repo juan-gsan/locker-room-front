@@ -1,5 +1,11 @@
 <section class="card-form-container">
-  <p>New Game</p>
+  <div class="back-arrow">
+    <a routerLink="/game">
+      <img src="assets/back.arrow.png" alt="back-arrow" height="50">
+    </a>
+  </div>
+  <p *ngIf="isNew">New Game</p>
+  <p *ngIf="!isNew">Edit Game</p>
   <form class="card-form" [formGroup]="game" (submit)="handleGame()">
     <label for=" location">Location</label>
     <input type="text" id="location" formControlName="location" name="location" required>

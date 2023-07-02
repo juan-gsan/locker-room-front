@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { first } from 'rxjs';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { first, map, switchMap, tap } from 'rxjs';
 import { GameService } from 'src/app/services/game.service';
 import { UserService } from 'src/app/services/user.service';
 import { Game } from 'src/models/game';
@@ -18,7 +18,8 @@ export class GameCardComponent implements OnInit {
   constructor(
     private gameService: GameService,
     private userService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -60,20 +61,37 @@ export class GameCardComponent implements OnInit {
   }
 
   handleJoin() {
-    const gameSubscription = this.gameService.game$.subscribe((game) => {
-      console.log(this.userService.token$.value.user);
-      game.players.push(this.userService.token$.value.user);
+    this.gameService.game$
+      .pipe(
+        map((game) => {
+          console.log(this.userService.token$.value.user);
+          game.players.push(this.userService.token$.value.user);
+          return game;
+        }),
+        first()
+      )
+      .subscribe((game) => {
+        this.gameService.joinGame(game.id, game).subscribe();
+      });
 
-      this.gameService.joinGame(game.id, game).pipe(first()).subscribe();
-    });
+    // Faltaría actualizar propiedad spotsLeft
+  }
 
-    gameSubscription.unsubscribe();
+  handleEdit() {
+    this.router.navigateByUrl('/game/edit/' + this.game.id);
   }
 
   handleDelete() {
-    this.gameService.game$.subscribe((game) => {
-      console.log(game);
-      this.gameService.deleteGame(game.id).pipe(first()).subscribe();
-    });
+    this.gameService
+      .deleteGame(this.game.id)
+      .pipe(
+        switchMap(() => this.gameService.getAllGames()),
+        tap((games) => {
+          this.gameService.games$.next(games);
+        })
+      )
+      .subscribe(() => {
+        this.router.navigateByUrl('game');
+      });
   }
 }

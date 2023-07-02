@@ -23,8 +23,8 @@
   </div>
   <div class="button">
     <button class="join-button" *ngIf="isLogged && !isOwner" (click)="handleJoin()">Join Game</button>
-    <button class="edit-button" *ngIf="isLogged && isOwner">Edit Game</button>
-    <button class="delete-button" *ngIf="isLogged && isOwner">Delete Game</button>
+    <button class="edit-button" *ngIf="isLogged && isOwner" (click)="handleEdit()">Edit Game</button>
+    <button class="delete-button" *ngIf="isLogged && isOwner" (click)="handleDelete()">Delete Game</button>
   </div>
 
 </section>

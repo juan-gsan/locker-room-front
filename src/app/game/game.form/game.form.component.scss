@@ -2,9 +2,18 @@ section {
   background-color: white;
   height: 100%;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  .back-arrow {
+    position: absolute;
+    left: 0.5rem;
+    top: 1rem;
+  }
+
   p {
     font-weight: bold;
     margin: 1rem;
+    padding-top: 1.5rem;
     text-align: center;
   }
 
@@ -13,7 +22,7 @@ section {
     display: flex;
     flex-direction: column;
     width: 70%;
-    max-width: 350px;
+    max-width: 300px;
     margin: auto;
     label {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;

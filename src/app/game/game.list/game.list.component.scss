@@ -1,5 +1,12 @@
 section {
   background-color: white;
+  @media (min-width: 500px) {
+    ul {
+      li {
+        max-width: 450px;
+      }
+    }
+  }
   .title-games {
     text-align: center;
     margin: 2rem;
@@ -19,6 +26,7 @@ section {
         text-decoration: none;
       }
       width: 90%;
+      max-width: 450px;
       .item-container {
         display: flex;
         background-color: black;
