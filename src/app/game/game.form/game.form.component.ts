@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from 'src/app/services/game.service';
+import { Game } from 'src/models/game';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -17,6 +18,7 @@ import Swal from 'sweetalert2';
 export class GameFormComponent implements OnInit {
   game: FormGroup;
   isNew = false;
+  currentGameData = {} as Game;
   constructor(
     public formBuilder: FormBuilder,
     private gameService: GameService,
@@ -35,8 +37,8 @@ export class GameFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkNew();
+    if (!this.isNew) this.getCurrentGameData();
   }
-
   checkNew() {
     console.log(this.isNew);
     const containsSegment = this.route.snapshot.url.some(
@@ -44,6 +46,27 @@ export class GameFormComponent implements OnInit {
     );
     if (containsSegment === true) this.isNew = true;
     console.log(this.isNew);
+  }
+
+  getCurrentGameData() {
+    if (!this.isNew) {
+      const gameId = this.route.snapshot.params['id'];
+      this.gameService.getGame(gameId).subscribe((data) => {
+        this.currentGameData = data;
+        this.getFormInitialValues();
+      });
+    }
+  }
+
+  getFormInitialValues() {
+    this.game.patchValue({
+      location: this.currentGameData?.location || '',
+      date: this.currentGameData?.schedule || '',
+      type: this.currentGameData?.gameType || '',
+      level: this.currentGameData?.level || null,
+      gender: this.currentGameData?.gender || '',
+      avatar: this.currentGameData?.avatar || null,
+    });
   }
 
   handleFileInput(event: Event) {
