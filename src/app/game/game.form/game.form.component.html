@@ -10,7 +10,7 @@
     <label for=" location">Location</label>
     <input type="text" id="location" formControlName="location" name="location" required>
     <label for="date">Schedule</label>
-    <input type="date" id="date" formControlName="date" name="date" required>
+    <input type="datetime-local" id="date" formControlName="date" name="date" required>
     <label for="type">Type</label>
     <select id="type" formControlName="type" name="type" required>
       <option value="">Choose an option</option>
@@ -34,7 +34,11 @@
       <option value="male">Male</option>
       <option value="mixed">Mixed</option>
     </select>
-    <button type="submit">Create Game</button>
+    <label for="avatar">Profile picture</label>
+    <input type="file" class="avatar" id="avatar" formControlName="avatar" name="avatar" fileName=""
+      (change)="handleFileInput($event)">
+    <button type="submit" *ngIf="isNew">Create Game</button>
+    <button type="submit" *ngIf="!isNew">Edit Game</button>
   </form>
 </section>
 <app-menu></app-menu>

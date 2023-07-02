@@ -1,8 +1,8 @@
 import { GameType } from 'src/types/game.type';
 import { Gender } from 'src/types/gender';
 import { Level } from 'src/types/level';
-import { SportsField } from './sports.field';
 import { User } from './user';
+import { Image } from 'src/types/image';
 
 export interface Game {
   id: string;
@@ -11,7 +11,8 @@ export interface Game {
   level: Level;
   gender: Gender;
   spotsLeft: number;
-  location: SportsField;
+  location: string;
+  avatar: Image;
   owner: User;
   players: Partial<User>[];
 }

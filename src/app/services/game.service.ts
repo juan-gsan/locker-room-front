@@ -38,7 +38,7 @@ export class GameService {
       .pipe(catchError(this.handleError));
   }
 
-  createGame(game: Partial<Game>) {
+  createGame(game: FormData) {
     const headers = new HttpHeaders().set(
       'Authorization',
       'Bearer ' + this.userService.token$.value.token
