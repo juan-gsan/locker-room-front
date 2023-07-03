@@ -50,6 +50,7 @@ export class SignupComponent {
     data.append('level', this.signup.get('level')?.value);
     data.append('gender', this.signup.get('gender')?.value);
     data.append('password', this.signup.get('password')?.value);
+
     console.log(data);
 
     this.userService.userRegister(data).subscribe();
@@ -70,6 +71,6 @@ export class SignupComponent {
       title: 'Signed in',
     });
 
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('login');
   }
 }

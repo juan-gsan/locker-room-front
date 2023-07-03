@@ -31,7 +31,7 @@ export class GameFormComponent implements OnInit {
       type: ['', [Validators.required]],
       level: [null, [Validators.required]],
       gender: ['', [Validators.required]],
-      avatar: new FormControl(null),
+      avatar: new FormControl(''),
     });
   }
 
@@ -82,12 +82,13 @@ export class GameFormComponent implements OnInit {
 
   handleGame() {
     const data = new FormData();
-    data.append('avatar', this.game.value.avatar);
     data.append('location', this.game.get('location')?.value);
     data.append('date', this.game.get('date')?.value);
+    data.append('type', this.game.get('type')?.value);
     data.append('level', this.game.get('level')?.value);
     data.append('gender', this.game.get('gender')?.value);
-    data.append('type', this.game.get('type')?.value);
+    data.append('avatar', this.game.value.avatar);
+
     console.log(data);
 
     this.gameService.createGame(data).subscribe();

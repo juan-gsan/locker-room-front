@@ -34,8 +34,8 @@
       <option value="male">Male</option>
       <option value="mixed">Mixed</option>
     </select>
-    <label for="avatar">Profile picture</label>
-    <input type="file" class="avatar" id="avatar" formControlName="avatar" name="avatar" fileName=""
+    <label for="avatar">Picture</label>
+    <input type="file" id="avatar" formControlName="avatar" name="avatar" fileName=""
       (change)="handleFileInput($event)">
     <button type="submit" *ngIf="isNew">Create Game</button>
     <button type="submit" *ngIf="!isNew">Edit Game</button>

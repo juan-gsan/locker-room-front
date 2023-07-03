@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
 
     this.userService.userLogin(loggedUser).subscribe((token) => {
       this.userService.token$.next(token);
+
       localStorage.setItem('userToken', JSON.stringify(token));
 
       this.router.navigateByUrl('game');
