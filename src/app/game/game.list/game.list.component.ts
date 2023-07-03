@@ -11,6 +11,7 @@ export class GameListComponent implements OnInit {
   items: Game[] = [];
   next: string | null = null;
   prev: string | null = null;
+  selectedFilter = '';
   constructor(public gameService: GameService) {}
 
   ngOnInit(): void {
@@ -45,5 +46,11 @@ export class GameListComponent implements OnInit {
       this.next = this.gameService.next$.value;
       this.prev = this.gameService.prev$.value;
     });
+  }
+
+  handleFilter(event: Event) {
+    const element = event.target as HTMLButtonElement;
+    this.selectedFilter = element.dataset['id'] || '';
+    this.loadAllGames();
   }
 }
