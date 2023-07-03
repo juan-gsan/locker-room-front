@@ -14,7 +14,25 @@ section {
     font-weight: bold;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
-
+  .filter-container {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    margin: 1rem auto;
+    button {
+      background-color: black;
+      color: white;
+      font-weight: bolder;
+      border-radius: 20px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+    .f7,
+    .f5 {
+      margin-left: 2rem;
+    }
+  }
   ul {
     display: flex;
     flex-direction: column;
@@ -52,21 +70,22 @@ section {
       }
     }
   }
-}
-
-.button-container {
-  width: 40%;
-  margin: 0 auto;
-  margin-top: 1rem;
-  button {
-    background-color: black;
-    color: white;
-    font-weight: bolder;
-    border-radius: 20px;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-  }
-  .next {
-    margin-left: 2rem;
+  .button-container {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    margin: 1rem auto;
+    button {
+      background-color: black;
+      color: white;
+      font-weight: bolder;
+      border-radius: 20px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+    .next {
+      margin-left: 2rem;
+    }
   }
 }

@@ -2,6 +2,11 @@
   <div class="title-games">
     <h2>GAMES</h2>
   </div>
+  <div class="filter-container">
+    <button class="f11">11 vs 11</button>
+    <button class="f7">7 vs 7</button>
+    <button class="f5">5 vs 5</button>
+  </div>
   <ul>
     <li *ngFor="let item of gameService.games$ | async">
       <a [routerLink]="item.id">
@@ -19,10 +24,11 @@
       </a>
     </li>
   </ul>
+  <div class="button-container">
+    <button class="previous" (click)="handlePrevious()"
+      [disabled]="(gameService.prev$ | async) === null">Previous</button>
+    <button class="next" (click)="handleNext()" [disabled]="(gameService.next$ | async) === null">Next</button>
+  </div>
 </section>
-<div class="button-container">
-  <button class="previous" (click)="handlePrevious()"
-    [disabled]="(gameService.prev$ | async) === null">Previous</button>
-  <button class="next" (click)="handleNext()" [disabled]="(gameService.next$ | async) === null">Next</button>
-</div>
+
 <app-menu></app-menu>
