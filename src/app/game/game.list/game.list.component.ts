@@ -9,6 +9,8 @@ import { Game } from 'src/models/game';
 })
 export class GameListComponent implements OnInit {
   items: Game[] = [];
+  next: string | null = null;
+  prev: string | null = null;
   constructor(public gameService: GameService) {}
 
   ngOnInit(): void {
@@ -20,6 +22,28 @@ export class GameListComponent implements OnInit {
       this.items = games;
       console.log(games);
       this.gameService.games$.next(games);
+      this.next = this.gameService.next$.value;
+      this.prev = this.gameService.prev$.value;
+    });
+  }
+
+  handleNext() {
+    if (!this.next) return;
+    this.gameService.getAllGames(this.next).subscribe((games) => {
+      this.items = games;
+      this.gameService.games$.next(games);
+      this.next = this.gameService.next$.value;
+      this.prev = this.gameService.prev$.value;
+    });
+  }
+
+  handlePrevious() {
+    if (!this.prev) return;
+    this.gameService.getAllGames(this.prev).subscribe((games) => {
+      this.items = games;
+      this.gameService.games$.next(games);
+      this.next = this.gameService.next$.value;
+      this.prev = this.gameService.prev$.value;
     });
   }
 }

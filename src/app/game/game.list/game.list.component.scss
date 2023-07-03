@@ -53,3 +53,20 @@ section {
     }
   }
 }
+
+.button-container {
+  width: 40%;
+  margin: 0 auto;
+  margin-top: 1rem;
+  button {
+    background-color: black;
+    color: white;
+    font-weight: bolder;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  .next {
+    margin-left: 2rem;
+  }
+}

@@ -17,18 +17,28 @@ export class GameService {
   private url = 'http://localhost:9999/game/';
   games$: BehaviorSubject<Game[]>;
   game$: BehaviorSubject<Game>;
+  next$: BehaviorSubject<string | null>;
+  prev$: BehaviorSubject<string | null>;
 
   constructor(private http: HttpClient, private userService: UserService) {
     const initialGames: Game[] = [];
     const initialGame: Game = {} as Game;
     this.games$ = new BehaviorSubject(initialGames);
     this.game$ = new BehaviorSubject(initialGame);
+    this.next$ = new BehaviorSubject<string | null>(null);
+    this.prev$ = new BehaviorSubject<string | null>(null);
   }
 
-  getAllGames(): Observable<Game[]> {
+  getAllGames(url: string = this.url): Observable<Game[]> {
     return this.http
-      .get<ApiResponse>(this.url)
-      .pipe(map((response) => response.items))
+      .get<ApiResponse>(url)
+      .pipe(
+        map((response) => {
+          this.next$.next(response.next);
+          this.prev$.next(response.prev);
+          return response.items;
+        })
+      )
       .pipe(catchError(this.handleError));
   }
 

@@ -20,4 +20,9 @@
     </li>
   </ul>
 </section>
+<div class="button-container">
+  <button class="previous" (click)="handlePrevious()"
+    [disabled]="(gameService.prev$ | async) === null">Previous</button>
+  <button class="next" (click)="handleNext()" [disabled]="(gameService.next$ | async) === null">Next</button>
+</div>
 <app-menu></app-menu>

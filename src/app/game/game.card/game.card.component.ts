@@ -72,6 +72,7 @@ export class GameCardComponent implements OnInit {
       )
       .subscribe((game) => {
         this.gameService.joinGame(game.id, game).subscribe();
+        console.log(game);
       });
 
     // Faltaría actualizar propiedad spotsLeft

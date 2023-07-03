@@ -51,7 +51,7 @@ export class SignupComponent {
     data.append('gender', this.signup.get('gender')?.value);
     data.append('password', this.signup.get('password')?.value);
 
-    console.log(data);
+    console.log(data.get('avatar'));
 
     this.userService.userRegister(data).subscribe();
 

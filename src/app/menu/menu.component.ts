@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 
 type MenuOptions = {
@@ -12,14 +12,24 @@ type MenuOptions = {
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
   menuOptions: MenuOptions[];
+  isRegistered = false;
   constructor(private userService: UserService) {
     this.menuOptions = [
       { path: '/', label: 'Log Out', image: 'log.out' },
       { path: this.getNewGamePath(), label: 'New Game', image: 'new.game' },
       { path: '/game', label: 'Explore', image: 'explore' },
     ];
+  }
+
+  ngOnInit(): void {
+    this.handleRegistered();
+  }
+
+  handleRegistered() {
+    console.log(this.isRegistered);
+    if (this.userService.token$.value.token) this.isRegistered = true;
   }
 
   getNewGamePath(): string {

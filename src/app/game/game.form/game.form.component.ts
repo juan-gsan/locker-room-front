@@ -31,7 +31,7 @@ export class GameFormComponent implements OnInit {
       type: ['', [Validators.required]],
       level: [null, [Validators.required]],
       gender: ['', [Validators.required]],
-      avatar: new FormControl(''),
+      avatar: new FormControl(null),
     });
   }
 
@@ -65,18 +65,20 @@ export class GameFormComponent implements OnInit {
       type: this.currentGameData?.gameType || '',
       level: this.currentGameData?.level || null,
       gender: this.currentGameData?.gender || '',
-      avatar: this.currentGameData?.avatar || null,
+      avatar: this.currentGameData?.avatar || '',
     });
   }
 
-  handleFileInput(event: Event) {
+  handleImageInput(event: Event) {
     const fileInput: HTMLInputElement = event.target as HTMLInputElement;
     const files: FileList | null = fileInput.files;
+
     if (files) {
+      const imageFormControl = this.game.get('avatar') as FormControl;
       console.log(files[0]);
-      const avatarFormControl = this.game.get('avatar') as FormControl;
-      avatarFormControl.setValue(files[0]);
-      console.log(avatarFormControl);
+      imageFormControl.setValue(files[0]);
+      console.log(files[0]);
+      console.log('avatar', imageFormControl);
     }
   }
 
@@ -89,7 +91,7 @@ export class GameFormComponent implements OnInit {
     data.append('gender', this.game.get('gender')?.value);
     data.append('avatar', this.game.value.avatar);
 
-    console.log(data);
+    console.log(data.get('avatar'));
 
     this.gameService.createGame(data).subscribe();
 
