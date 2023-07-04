@@ -8,7 +8,10 @@
   <p *ngIf="!isNew">Edit Game</p>
   <form class="card-form" [formGroup]="game" (submit)="handleGame()">
     <label for=" location">Location</label>
-    <input type="text" id="location" formControlName="location" name="location" required>
+    <select id="location" formControlName="location" name="location" required>
+      <option value="">Choose an option</option>
+      <option *ngFor="let field of sportsFields" [ngValue]="field">{{ field.name }}</option>
+    </select>
     <label for="schedule">Schedule</label>
     <input type="datetime-local" id="schedule" formControlName="schedule" name="schedule" required>
     <label for="gameType">Type</label>
@@ -36,6 +39,8 @@
     </select>
     <button type="submit" *ngIf="isNew">Create Game</button>
     <button type="submit" *ngIf="!isNew">Edit Game</button>
+
+    {{game.value | json }}
   </form>
 </section>
 <app-menu></app-menu>
