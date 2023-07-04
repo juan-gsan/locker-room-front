@@ -66,6 +66,7 @@ export class GameCardComponent implements OnInit {
         map((game) => {
           console.log(this.userService.token$.value.user);
           game.players.push(this.userService.token$.value.user);
+          game.spotsLeft -= 1;
           return game;
         }),
         first()
@@ -74,8 +75,6 @@ export class GameCardComponent implements OnInit {
         this.gameService.joinGame(game.id, game).subscribe();
         console.log(game);
       });
-
-    // Faltaría actualizar propiedad spotsLeft
   }
 
   handleEdit() {

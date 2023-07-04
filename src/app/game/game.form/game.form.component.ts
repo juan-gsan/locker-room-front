@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from 'src/app/services/game.service';
 import { Game } from 'src/models/game';
@@ -27,11 +22,10 @@ export class GameFormComponent implements OnInit {
   ) {
     this.game = formBuilder.group({
       location: ['', [Validators.required]],
-      date: ['', [Validators.required]],
-      type: ['', [Validators.required]],
+      schedule: ['', [Validators.required]],
+      gameType: ['', [Validators.required]],
       level: [null, [Validators.required]],
       gender: ['', [Validators.required]],
-      avatar: new FormControl(null),
     });
   }
 
@@ -61,39 +55,23 @@ export class GameFormComponent implements OnInit {
   getFormInitialValues() {
     this.game.patchValue({
       location: this.currentGameData?.location || '',
-      date: this.currentGameData?.schedule || '',
-      type: this.currentGameData?.gameType || '',
+      schedule: this.currentGameData?.schedule || '',
+      gameType: this.currentGameData?.gameType || '',
       level: this.currentGameData?.level || null,
       gender: this.currentGameData?.gender || '',
-      avatar: this.currentGameData?.avatar || '',
     });
   }
 
-  handleImageInput(event: Event) {
-    const fileInput: HTMLInputElement = event.target as HTMLInputElement;
-    const files: FileList | null = fileInput.files;
-
-    if (files) {
-      const imageFormControl = this.game.get('avatar') as FormControl;
-      console.log(files[0]);
-      imageFormControl.setValue(files[0]);
-      console.log(files[0]);
-      console.log('avatar', imageFormControl);
-    }
-  }
-
   handleGame() {
-    const data = new FormData();
-    data.append('location', this.game.get('location')?.value);
-    data.append('date', this.game.get('date')?.value);
-    data.append('type', this.game.get('type')?.value);
-    data.append('level', this.game.get('level')?.value);
-    data.append('gender', this.game.get('gender')?.value);
-    data.append('avatar', this.game.value.avatar);
+    const newGame = {
+      location: this.game.value.location,
+      schedule: this.game.value.schedule,
+      gameType: this.game.value.gameType,
+      level: this.game.value.level,
+      gender: this.game.value.gender,
+    };
 
-    console.log(data.get('avatar'));
-
-    this.gameService.createGame(data).subscribe();
+    this.gameService.createGame(newGame).subscribe();
 
     const Toast = Swal.mixin({
       toast: true,

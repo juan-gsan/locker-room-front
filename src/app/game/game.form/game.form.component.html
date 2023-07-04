@@ -9,10 +9,10 @@
   <form class="card-form" [formGroup]="game" (submit)="handleGame()">
     <label for=" location">Location</label>
     <input type="text" id="location" formControlName="location" name="location" required>
-    <label for="date">Schedule</label>
-    <input type="datetime-local" id="date" formControlName="date" name="date" required>
-    <label for="type">Type</label>
-    <select id="type" formControlName="type" name="type" required>
+    <label for="schedule">Schedule</label>
+    <input type="datetime-local" id="schedule" formControlName="schedule" name="schedule" required>
+    <label for="gameType">Type</label>
+    <select id="gameType" formControlName="gameType" name="gameType" required>
       <option value="">Choose an option</option>
       <option value="f11">f11</option>
       <option value="f7">f7</option>
@@ -34,9 +34,6 @@
       <option value="male">Male</option>
       <option value="mixed">Mixed</option>
     </select>
-    <label for="image">Picture</label>
-    <input type="file" id="avatar" formControlName="avatar" name="avatar" fileName=""
-      (change)="handleImageInput($event)">
     <button type="submit" *ngIf="isNew">Create Game</button>
     <button type="submit" *ngIf="!isNew">Edit Game</button>
   </form>

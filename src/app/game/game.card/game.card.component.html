@@ -18,8 +18,8 @@
     <p>Gender: {{ this.game.gender }}</p>
     <p>Owner: {{ this.game.owner.userName }}</p>
     <p>Spots: {{ this.game.spotsLeft}}</p>
-    <!-- <p>Players:</p>
-    <p *ngFor="let item of this.game.players">{{ item.userName }}</p> -->
+    <p>Players:</p>
+    <p *ngFor="let item of this.game.players">{{ item.userName }}</p>
   </div>
   <div class="button">
     <button class="join-button" *ngIf="isLogged && !isOwner" (click)="handleJoin()">Join Game</button>

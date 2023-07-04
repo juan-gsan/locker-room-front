@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import jwtDecode from 'jwt-decode';
-import { UserLogged } from 'src/types/user.logged';
 import { Router } from '@angular/router';
 import { UserService } from './services/user.service';
 @Component({
@@ -13,18 +11,15 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
-    console.log('OnInit executed');
     this.getInitialToken();
   }
 
   getInitialToken() {
     const localStorageString = localStorage.getItem('userToken');
 
-    if (!localStorageString) return console.log('No token');
+    if (!localStorageString) return;
     const userInfo = JSON.parse(localStorageString);
-    const userLoggedData: UserLogged = jwtDecode(userInfo.token);
-    console.log(userLoggedData);
+    console.log(userInfo);
     this.userService.token$.next(userInfo);
-    console.log(this.userService.token$);
   }
 }

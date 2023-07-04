@@ -3,6 +3,7 @@ import { Gender } from 'src/types/gender';
 import { Level } from 'src/types/level';
 import { User } from './user';
 import { Image } from 'src/types/image';
+import { SportsField } from './sports.field';
 
 export interface Game {
   id: string;
@@ -11,7 +12,7 @@ export interface Game {
   level: Level;
   gender: Gender;
   spotsLeft: number;
-  location: string;
+  location: SportsField;
   avatar: Image;
   owner: User;
   players: Partial<User>[];
