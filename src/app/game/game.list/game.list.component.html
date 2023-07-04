@@ -14,8 +14,8 @@
           <img class="image-game" src="{{ item.location.avatar }}" alt="" height="150px" />
           <div class="info-game">
             <p class="location">{{ item.location.name }}</p>
-            <p>{{ item.schedule.toString() }}</p>
-            <p>{{ item.schedule.toString() }}</p>
+            <p>{{ item.schedule.toString().slice(0,10) }}</p>
+            <p>{{ item.schedule.toString().slice(11,-8) }}</p>
             <p>Type: {{ item.gameType }}</p>
             <p>Level: {{ item.level }}/5</p>
             <p>Gender: {{ item.gender }}</p>

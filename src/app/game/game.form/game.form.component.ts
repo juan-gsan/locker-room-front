@@ -48,7 +48,7 @@ export class GameFormComponent implements OnInit {
     },
     {
       id: '6',
-      name: 'Anfield',
+      name: 'Anfield Stadium',
       location: 'Anfield Road, Liverpool, L4',
       avatar: 'assets/field06.jpg',
     },
@@ -110,24 +110,50 @@ export class GameFormComponent implements OnInit {
       gender: this.game.value.gender,
     };
 
-    this.gameService.createGame(newGame).subscribe(() => {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 2000,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer);
-          toast.addEventListener('mouseleave', Swal.resumeTimer);
-        },
-      });
+    if (this.isNew) {
+      this.gameService.createGame(newGame).subscribe(() => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          },
+        });
 
-      Toast.fire({
-        icon: 'success',
-        title: 'Done!',
-      });
+        Toast.fire({
+          icon: 'success',
+          title: 'Done!',
+        });
 
-      this.router.navigateByUrl('game');
-    });
+        this.router.navigateByUrl('game');
+      });
+    }
+
+    if (!this.isNew) {
+      this.gameService
+        .editGame(this.route.snapshot.params['id'], newGame)
+        .subscribe(() => {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: 'success',
+            title: 'Done!',
+          });
+
+          this.router.navigateByUrl('game');
+        });
+    }
   }
 }
