@@ -23,7 +23,6 @@ export class GameCardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.route);
     this.route.params.subscribe((params) => (this.params = params));
     this.loadGameCard(this.params['id']);
   }
@@ -31,7 +30,7 @@ export class GameCardComponent implements OnInit {
   loadGameCard(id: string) {
     this.gameService.getGame(id).subscribe((game) => {
       this.game = game;
-      console.log(game);
+
       this.gameService.game$.next(game);
       this.checkToken();
       this.checkOwner();

@@ -28,7 +28,6 @@ export class MenuComponent implements OnInit {
   }
 
   handleRegistered() {
-    console.log(this.isRegistered);
     if (this.userService.token$.value.token) this.isRegistered = true;
   }
 

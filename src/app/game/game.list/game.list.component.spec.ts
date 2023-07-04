@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameListComponent } from './game.list.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('GameListComponent', () => {
   let component: GameListComponent;
@@ -8,7 +9,8 @@ describe('GameListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [GameListComponent]
+      imports: [HttpClientTestingModule],
+      declarations: [GameListComponent],
     });
     fixture = TestBed.createComponent(GameListComponent);
     component = fixture.componentInstance;

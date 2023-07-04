@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameFormComponent } from './game.form.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('GameFormComponent', () => {
   let component: GameFormComponent;
@@ -8,7 +10,8 @@ describe('GameFormComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [GameFormComponent]
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      declarations: [GameFormComponent],
     });
     fixture = TestBed.createComponent(GameFormComponent);
     component = fixture.componentInstance;

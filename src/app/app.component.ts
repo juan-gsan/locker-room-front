@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
     if (!localStorageString) return;
     const userInfo = JSON.parse(localStorageString);
-    console.log(userInfo);
+
     this.userService.token$.next(userInfo);
   }
 }
