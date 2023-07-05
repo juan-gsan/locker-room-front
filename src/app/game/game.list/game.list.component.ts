@@ -47,10 +47,4 @@ export class GameListComponent implements OnInit {
       this.prev = this.gameService.prev$.value;
     });
   }
-
-  handleFilter(event: Event) {
-    const element = event.target as HTMLButtonElement;
-    this.selectedFilter = element.dataset['id'] || '';
-    this.loadAllGames();
-  }
 }
