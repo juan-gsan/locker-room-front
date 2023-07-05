@@ -1,0 +1,91 @@
+section {
+  background-color: white;
+  @media (min-width: 500px) {
+    ul {
+      li {
+        max-width: 450px;
+      }
+    }
+  }
+  .title-games {
+    text-align: center;
+    margin: 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .filter-container {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    margin: 1rem auto;
+    button {
+      background-color: black;
+      color: white;
+      font-weight: bolder;
+      border-radius: 20px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+    .f7,
+    .f5 {
+      margin-left: 2rem;
+    }
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    li {
+      a {
+        text-decoration: none;
+      }
+      width: 90%;
+      max-width: 450px;
+      .item-container {
+        display: flex;
+        background-color: black;
+        color: white;
+        border-radius: 20px;
+        padding: 1rem;
+        .image-game {
+          width: 40%;
+          object-fit: cover;
+          border-radius: 10px 0 0 10px;
+        }
+        .info-game {
+          width: 60%;
+          margin-left: 1rem;
+          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+          p {
+            margin: 0.5rem;
+          }
+          .location {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+  .button-container {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    margin: 1rem auto;
+    button {
+      background-color: black;
+      color: white;
+      font-weight: bolder;
+      border-radius: 20px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+    .next {
+      margin-left: 2rem;
+    }
+  }
+}

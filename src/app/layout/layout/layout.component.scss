@@ -1,0 +1,21 @@
+app-header,
+main {
+  font-family: inherit;
+  position: relative;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+main {
+  background-image: url("../../../assets/home.background.jpg");
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+
+  @media (min-width: 500px) {
+    background-image: url("../../../assets/home.background.desktop.jpg");
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+  }
+}
