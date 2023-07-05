@@ -15,6 +15,7 @@ export class GameCardComponent implements OnInit {
   params: Params = { id: '' };
   isLogged = false;
   isOwner = false;
+  isJoined = false;
   constructor(
     private gameService: GameService,
     private userService: UserService,
@@ -34,6 +35,7 @@ export class GameCardComponent implements OnInit {
       this.gameService.game$.next(game);
       this.checkToken();
       this.checkOwner();
+      this.checkJoined();
     });
   }
 
@@ -59,6 +61,19 @@ export class GameCardComponent implements OnInit {
     });
   }
 
+  checkJoined() {
+    this.userService.token$.subscribe((token) => {
+      this.gameService.game$.subscribe((game) => {
+        for (let i = 0; i < game.players.length; i++) {
+          if (game.players[i].id === token.user.id) {
+            this.isJoined = true;
+            console.log(this.isJoined);
+          }
+        }
+      });
+    });
+  }
+
   handleJoin() {
     this.gameService.game$
       .pipe(
@@ -74,6 +89,8 @@ export class GameCardComponent implements OnInit {
         this.gameService.joinGame(game.id, game).subscribe();
         console.log(game);
       });
+    this.isJoined = true;
+    this.router.navigateByUrl('/game/' + this.game.id);
   }
 
   handleEdit() {
