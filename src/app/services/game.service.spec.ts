@@ -5,7 +5,6 @@ import {
 } from '@angular/common/http/testing';
 import { GameService } from './game.service';
 import { Game } from 'src/models/game';
-import { User } from 'src/models/user';
 import { HttpErrorResponse } from '@angular/common/http';
 
 describe('GameService', () => {

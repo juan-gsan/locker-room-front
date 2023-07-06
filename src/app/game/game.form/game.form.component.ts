@@ -55,9 +55,9 @@ export class GameFormComponent implements OnInit {
   ];
   constructor(
     public formBuilder: FormBuilder,
-    private gameService: GameService,
-    private router: Router,
-    private route: ActivatedRoute
+    public gameService: GameService,
+    public router: Router,
+    public route: ActivatedRoute
   ) {
     this.game = formBuilder.group({
       location: [{}, [Validators.required]],
@@ -73,12 +73,10 @@ export class GameFormComponent implements OnInit {
     if (!this.isNew) this.getCurrentGameData();
   }
   checkNew() {
-    console.log(this.isNew);
     const containsSegment = this.route.snapshot.url.some(
       (segment) => segment.path === 'create'
     );
     if (containsSegment === true) this.isNew = true;
-    console.log(this.isNew);
   }
 
   getCurrentGameData() {
