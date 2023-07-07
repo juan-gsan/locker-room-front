@@ -19,7 +19,7 @@ export class SignupComponent {
   constructor(
     public formBuilder: FormBuilder,
     private userService: UserService,
-    private router: Router
+    public router: Router
   ) {
     this.signup = formBuilder.group({
       userName: ['', [Validators.required]],
@@ -35,10 +35,8 @@ export class SignupComponent {
     const fileInput: HTMLInputElement = event.target as HTMLInputElement;
     const files: FileList | null = fileInput.files;
     if (files) {
-      console.log(files[0]);
       const avatarFormControl = this.signup.get('avatar') as FormControl;
       avatarFormControl.setValue(files[0]);
-      console.log(avatarFormControl);
     }
   }
 

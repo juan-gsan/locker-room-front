@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LayoutComponent } from './layout.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HeaderComponent } from '../header/header.component';
 
 describe('LayoutComponent', () => {
   let component: LayoutComponent;
@@ -8,7 +11,8 @@ describe('LayoutComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LayoutComponent]
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      declarations: [LayoutComponent, HeaderComponent],
     });
     fixture = TestBed.createComponent(LayoutComponent);
     component = fixture.componentInstance;
