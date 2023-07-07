@@ -54,12 +54,14 @@ describe('LoginComponent', () => {
     component.login.setValue(userLogin);
 
     mockUserService.userLogin.and.returnValue(of());
-    spyOn(Swal, 'fire');
 
     component.handleLogin();
 
     expect(mockUserService.userLogin).toHaveBeenCalledWith(userLogin);
+
+    expect(mockUserService.token$.next).toHaveBeenCalled();
   });
+
   it('should handle error on submit', () => {
     const userLogin = { user: 'test', passwd: 'test' };
     component.login.setValue(userLogin);
