@@ -14,8 +14,8 @@ import { UserService } from './user.service';
   providedIn: 'root',
 })
 export class GameService {
-  public urlLocal = 'http://localhost:9999/game/';
-  public url = 'https://lockerroom.onrender.com/game/';
+  public url = 'http://localhost:9999/game/';
+  public urlRender = 'https://lockerroom.onrender.com/game/';
   games$: BehaviorSubject<Game[]>;
   game$: BehaviorSubject<Game>;
   next$: BehaviorSubject<string | null>;

@@ -8,8 +8,8 @@ import { Token } from 'src/types/token';
   providedIn: 'root',
 })
 export class UserService {
-  private urlLocal = 'http://localhost:9999/user';
-  private url = 'https://lockerroom.onrender.com/user';
+  private url = 'http://localhost:9999/user';
+  private urlRender = 'https://lockerroom.onrender.com/user';
   token$: BehaviorSubject<Token>;
 
   constructor(private http: HttpClient) {
