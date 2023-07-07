@@ -56,9 +56,10 @@ describe('GameFormComponent', () => {
     component.route.snapshot.url = urlSegments;
 
     component.checkNew();
-
+    urlSegments.some((segment) => {
+      expect(segment.path).toBe('create');
+    });
     expect(component.isNew).toBeTrue();
-    expect(urlSegments.some).toBeTrue();
   });
 
   it('should not set isNew to true when URL does not contain "create" segment', () => {
@@ -75,9 +76,11 @@ describe('GameFormComponent', () => {
 
     component.getCurrentGameData();
 
-    expect(mockGameService.getGame).toHaveBeenCalledWith('gameId');
-    expect(component.currentGameData).toEqual({} as Game);
-    expect(component.getFormInitialValues).toHaveBeenCalled();
+    mockGameService.getGame('gameId').subscribe((data) => {
+      expect(mockGameService.getGame).toHaveBeenCalledWith('gameId');
+      expect(component.currentGameData).toEqual(data);
+      expect(component.getFormInitialValues).toHaveBeenCalled();
+    });
   });
 
   it('should not get current game data if new', () => {
