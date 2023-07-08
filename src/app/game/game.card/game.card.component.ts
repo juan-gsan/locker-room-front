@@ -77,24 +77,40 @@ export class GameCardComponent implements OnInit {
   handleJoin() {
     this.gameService.game$
       .pipe(
-        map((game) => {
-          console.log(this.userService.token$.value.user);
+        first(),
+        switchMap((game) => {
           game.players.push(this.userService.token$.value.user);
-          game.spotsLeft -= 1;
-          return game;
-        }),
-        first()
+          game.spotsLeft += 1;
+
+          return this.gameService.joinGame(game.id, game);
+        })
       )
-      .subscribe((game) => {
-        this.gameService.joinGame(game.id, game).subscribe();
-        console.log(game);
+      .subscribe(() => {
+        this.isJoined = true;
+        this.router.navigateByUrl('/game/' + this.game.id);
       });
-    this.isJoined = true;
-    this.router.navigateByUrl('/game/' + this.game.id);
   }
 
   handleEdit() {
     this.router.navigateByUrl('/game/edit/' + this.game.id);
+  }
+
+  handleLeave() {
+    this.gameService.game$
+      .pipe(
+        first(),
+        switchMap((game) => {
+          game.players = game.players.filter((player) => {
+            return player.id !== this.userService.token$.value.user.id;
+          });
+          game.spotsLeft += 1;
+          return this.gameService.leaveGame(game.id, game);
+        })
+      )
+      .subscribe(() => {
+        this.isJoined = false;
+        this.router.navigateByUrl('/game/' + this.game.id);
+      });
   }
 
   handleDelete() {

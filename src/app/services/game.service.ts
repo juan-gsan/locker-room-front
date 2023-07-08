@@ -31,15 +31,14 @@ export class GameService {
   }
 
   getAllGames(url: string = this.url, filter?: string): Observable<Game[]> {
-    let urlSent;
-    !filter ? (urlSent = url) : (urlSent = `${url}?filter=${filter}`);
+    const urlSent = filter ? `${url}?filter=${filter}` : url;
+
     return this.http
       .get<ApiResponse>(urlSent)
       .pipe(
         map((response) => {
           this.next$.next(response.next);
           this.prev$.next(response.prev);
-          console.log(response);
           return response.items;
         })
       )
@@ -68,7 +67,17 @@ export class GameService {
       'Bearer ' + this.userService.token$.value.token
     );
     return this.http
-      .patch(this.url + id, game, { headers })
+      .patch(this.url + 'join/' + id, game, { headers })
+      .pipe(catchError(this.handleError));
+  }
+
+  leaveGame(id: string, game: Partial<Game>) {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      'Bearer ' + this.userService.token$.value.token
+    );
+    return this.http
+      .patch(this.url + 'leave/' + id, game, { headers })
       .pipe(catchError(this.handleError));
   }
 

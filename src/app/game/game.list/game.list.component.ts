@@ -53,7 +53,33 @@ export class GameListComponent implements OnInit {
     console.log(element);
 
     if (element.classList.value === 'f5') {
-      this.selectedFilter = 'f5';
+      this.selectedFilter = '?filter=f5';
+      this.gameService
+        .getAllGames(this.gameService.url + this.selectedFilter)
+        .subscribe((games) => {
+          this.items = games;
+          this.gameService.games$.next(games);
+          this.next = this.gameService.next$.value;
+          this.prev = this.gameService.prev$.value;
+        });
+    }
+
+    if (element.classList.value === 'f7') {
+      this.selectedFilter = '?filter=f7';
+      console.log(this.gameService.url);
+      this.gameService
+        .getAllGames(this.gameService.url + this.selectedFilter)
+        .subscribe((games) => {
+          this.items = games;
+          this.gameService.games$.next(games);
+          this.next = this.gameService.next$.value;
+          this.prev = this.gameService.prev$.value;
+        });
+    }
+
+    if (element.classList.value === 'f11') {
+      this.selectedFilter = '?filter=f11';
+      console.log(this.gameService.url);
       this.gameService
         .getAllGames(this.gameService.url + this.selectedFilter)
         .subscribe((games) => {
