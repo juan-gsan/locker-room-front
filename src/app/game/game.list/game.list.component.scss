@@ -1,5 +1,15 @@
 section {
   background-color: white;
+  .map-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    iframe {
+      max-width: 450px;
+      width: 90%;
+      border-radius: 20px;
+    }
+  }
   @media (min-width: 500px) {
     ul {
       li {
