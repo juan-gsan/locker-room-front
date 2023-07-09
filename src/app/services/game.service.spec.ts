@@ -60,7 +60,21 @@ describe('GameService', () => {
       const mockId = '123';
       gameService.joinGame(mockId, mockGame).subscribe();
 
-      const req = httpMock.expectOne(gameService.url + mockId);
+      const req = httpMock.expectOne(gameService.url + 'join/' + mockId);
+      expect(req.request.method).toBe('PATCH');
+      expect(req.request.headers.get('Authorization')).toContain('Bearer ');
+
+      req.flush(mockGame);
+    });
+  });
+
+  describe('When leaveGame is called', () => {
+    it('Should update the current game', () => {
+      const mockGame: Partial<Game> = {};
+      const mockId = '123';
+      gameService.leaveGame(mockId, mockGame).subscribe();
+
+      const req = httpMock.expectOne(gameService.url + 'leave/' + mockId);
       expect(req.request.method).toBe('PATCH');
       expect(req.request.headers.get('Authorization')).toContain('Bearer ');
 

@@ -27,12 +27,6 @@ export class SignupComponent {
   }
 
   handleFileInput(event: Event) {
-    // const fileInput: HTMLInputElement = event.target as HTMLInputElement;
-    // const files: FileList | null = fileInput.files;
-    // if (files) {
-    //   const avatarFormControl = this.signup.get('avatar') as FormControl;
-    //   avatarFormControl.setValue(files[0]);
-    // }
     const target = event.target as HTMLInputElement;
     const files = target.files as FileList;
     this.avatar = files.item(0);

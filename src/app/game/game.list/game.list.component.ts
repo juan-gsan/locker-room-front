@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
+import { UserService } from 'src/app/services/user.service';
 import { Game } from 'src/models/game';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-game.list',
@@ -11,17 +13,22 @@ export class GameListComponent implements OnInit {
   items: Game[] = [];
   next: string | null = null;
   prev: string | null = null;
-  selectedFilter: string | null = null;
-  constructor(public gameService: GameService) {}
+  currentUser: Partial<User> = {};
+  constructor(
+    public gameService: GameService,
+    public userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.loadAllGames();
+    this.userService.token$.subscribe(
+      (token) => (this.currentUser = token.user)
+    );
   }
 
   loadAllGames(): void {
     this.gameService.getAllGames().subscribe((games) => {
       this.items = games;
-      console.log(games);
       this.gameService.games$.next(games);
       this.next = this.gameService.next$.value;
       this.prev = this.gameService.prev$.value;
@@ -46,48 +53,5 @@ export class GameListComponent implements OnInit {
       this.next = this.gameService.next$.value;
       this.prev = this.gameService.prev$.value;
     });
-  }
-
-  handleFilter(event: Event) {
-    const element = event.target as HTMLButtonElement;
-    console.log(element);
-
-    if (element.classList.value === 'f5') {
-      this.selectedFilter = '?filter=f5';
-      this.gameService
-        .getAllGames(this.gameService.url + this.selectedFilter)
-        .subscribe((games) => {
-          this.items = games;
-          this.gameService.games$.next(games);
-          this.next = this.gameService.next$.value;
-          this.prev = this.gameService.prev$.value;
-        });
-    }
-
-    if (element.classList.value === 'f7') {
-      this.selectedFilter = '?filter=f7';
-      console.log(this.gameService.url);
-      this.gameService
-        .getAllGames(this.gameService.url + this.selectedFilter)
-        .subscribe((games) => {
-          this.items = games;
-          this.gameService.games$.next(games);
-          this.next = this.gameService.next$.value;
-          this.prev = this.gameService.prev$.value;
-        });
-    }
-
-    if (element.classList.value === 'f11') {
-      this.selectedFilter = '?filter=f11';
-      console.log(this.gameService.url);
-      this.gameService
-        .getAllGames(this.gameService.url + this.selectedFilter)
-        .subscribe((games) => {
-          this.items = games;
-          this.gameService.games$.next(games);
-          this.next = this.gameService.next$.value;
-          this.prev = this.gameService.prev$.value;
-        });
-    }
   }
 }

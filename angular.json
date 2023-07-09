@@ -83,12 +83,7 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss"],
             "scripts": [],
-            "codeCoverageExclude": [
-              "src/app/user/**",
-              "src/app/services/game.service.ts",
-              "src/app/game/game.card/**",
-              "src/app/game/game.form/**"
-            ]
+            "codeCoverageExclude": []
           }
         },
         "lint": {

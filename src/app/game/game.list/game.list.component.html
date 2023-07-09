@@ -1,4 +1,8 @@
 <section class="game-list">
+  <div class="greetings-games" *ngIf="this.currentUser.id">
+    <h1>Hello, {{ this.currentUser.userName }}</h1>
+    <img src="{{ this.currentUser.avatar?.url }}" alt="{{ this.currentUser.userName }}" width="64px" height="64px">
+  </div>
   <div class="title-games">
     <h2>GAMES</h2>
   </div>
@@ -7,9 +11,9 @@
       width="450" height="350"></iframe>
   </div>
   <div class="filter-container">
-    <button class="f11" data-id="f11" (click)="handleFilter($event)">11 vs 11</button>
-    <button class="f7" data-id="f7" (click)="handleFilter($event)">7 vs 7</button>
-    <button class="f5" data-id="f5" (click)="handleFilter($event)">5 vs 5</button>
+    <button class="f11" data-id="f11">11 vs 11</button>
+    <button class="f7" data-id="f7">7 vs 7</button>
+    <button class="f5" data-id="f5">5 vs 5</button>
   </div>
   <ul>
     <li *ngFor="let item of gameService.games$ | async">
@@ -34,5 +38,4 @@
     <button class="next" (click)="handleNext()" [disabled]="(gameService.next$ | async) === null">Next</button>
   </div>
 </section>
-
 <app-menu></app-menu>

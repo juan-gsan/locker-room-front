@@ -30,11 +30,9 @@ export class GameService {
     this.prev$ = new BehaviorSubject<string | null>(null);
   }
 
-  getAllGames(url: string = this.url, filter?: string): Observable<Game[]> {
-    const urlSent = filter ? `${url}?filter=${filter}` : url;
-
+  getAllGames(url: string = this.url): Observable<Game[]> {
     return this.http
-      .get<ApiResponse>(urlSent)
+      .get<ApiResponse>(url)
       .pipe(
         map((response) => {
           this.next$.next(response.next);

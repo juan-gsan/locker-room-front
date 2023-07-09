@@ -52,13 +52,13 @@ describe('LoginComponent', () => {
   it('should handle login on submit', () => {
     const userLogin = { user: 'test', password: 'test' };
     component.login.setValue(userLogin);
-
+    spyOn(Swal, 'fire');
     mockUserService.userLogin.and.returnValue(of());
-
+    spyOn(mockUserService.token$, 'next');
     component.handleLogin();
 
     expect(mockUserService.userLogin).toHaveBeenCalledWith(userLogin);
-
+    expect(Swal.fire).toHaveBeenCalled();
     expect(mockUserService.token$.next).toHaveBeenCalled();
   });
 

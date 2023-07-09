@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { first, map, switchMap, tap } from 'rxjs';
+import { first, switchMap, tap } from 'rxjs';
 import { GameService } from 'src/app/services/game.service';
 import { UserService } from 'src/app/services/user.service';
 import { Game } from 'src/models/game';
@@ -80,7 +80,7 @@ export class GameCardComponent implements OnInit {
         first(),
         switchMap((game) => {
           game.players.push(this.userService.token$.value.user);
-          game.spotsLeft += 1;
+          game.spotsLeft -= 1;
 
           return this.gameService.joinGame(game.id, game);
         })

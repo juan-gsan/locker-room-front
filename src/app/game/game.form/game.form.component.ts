@@ -91,7 +91,7 @@ export class GameFormComponent implements OnInit {
 
   getFormInitialValues() {
     this.game.patchValue({
-      location: this.currentGameData?.location || {},
+      location: this.currentGameData?.location.name || '',
       schedule: this.currentGameData?.schedule || '',
       gameType: this.currentGameData?.gameType || '',
       level: this.currentGameData?.level || null,

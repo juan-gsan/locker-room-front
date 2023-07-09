@@ -83,7 +83,7 @@ describe('SignupComponent', () => {
     };
     component.signup.setValue(userRegister);
     mockUserService.userRegister.and.returnValue(of());
-
+    component.avatar = new File(['test'], 'test.jpg');
     component.handleSignup();
 
     expect(mockUserService.userRegister).toHaveBeenCalled();
