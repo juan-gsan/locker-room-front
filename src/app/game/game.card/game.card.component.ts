@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { first, map, switchMap, tap } from 'rxjs';
+import { first, switchMap, tap } from 'rxjs';
 import { GameService } from 'src/app/services/game.service';
 import { UserService } from 'src/app/services/user.service';
 import { Game } from 'src/models/game';
@@ -17,10 +17,10 @@ export class GameCardComponent implements OnInit {
   isOwner = false;
   isJoined = false;
   constructor(
-    private gameService: GameService,
-    private userService: UserService,
-    private route: ActivatedRoute,
-    private router: Router
+    public gameService: GameService,
+    public userService: UserService,
+    public route: ActivatedRoute,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -40,22 +40,18 @@ export class GameCardComponent implements OnInit {
   }
 
   checkToken() {
-    console.log(this.isLogged);
     this.userService.token$.subscribe((token) => {
       if (token.token) {
         this.isLogged = true;
-        console.log(this.isLogged);
       }
     });
   }
 
   checkOwner() {
-    console.log(this.isOwner);
     this.userService.token$.subscribe((token) => {
       this.gameService.game$.subscribe((game) => {
         if (token.user.id === game.owner.id) {
           this.isOwner = true;
-          console.log(this.isOwner);
         }
       });
     });
@@ -77,24 +73,40 @@ export class GameCardComponent implements OnInit {
   handleJoin() {
     this.gameService.game$
       .pipe(
-        map((game) => {
-          console.log(this.userService.token$.value.user);
+        first(),
+        switchMap((game) => {
           game.players.push(this.userService.token$.value.user);
           game.spotsLeft -= 1;
-          return game;
-        }),
-        first()
+
+          return this.gameService.joinGame(game.id, game);
+        })
       )
-      .subscribe((game) => {
-        this.gameService.joinGame(game.id, game).subscribe();
-        console.log(game);
+      .subscribe(() => {
+        this.isJoined = true;
+        this.router.navigateByUrl('/game/' + this.game.id);
       });
-    this.isJoined = true;
-    this.router.navigateByUrl('/game/' + this.game.id);
   }
 
   handleEdit() {
     this.router.navigateByUrl('/game/edit/' + this.game.id);
+  }
+
+  handleLeave() {
+    this.gameService.game$
+      .pipe(
+        first(),
+        switchMap((game) => {
+          game.players = game.players.filter((player) => {
+            return player.id !== this.userService.token$.value.user.id;
+          });
+          game.spotsLeft += 1;
+          return this.gameService.leaveGame(game.id, game);
+        })
+      )
+      .subscribe(() => {
+        this.isJoined = false;
+        this.router.navigateByUrl('/game/' + this.game.id);
+      });
   }
 
   handleDelete() {

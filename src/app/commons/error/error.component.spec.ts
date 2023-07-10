@@ -1,19 +1,15 @@
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-} from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ErrorComponent } from './error.component';
+import { Location } from '@angular/common';
 
 describe('ErrorComponent', () => {
   let component: ErrorComponent;
   let fixture: ComponentFixture<ErrorComponent>;
-
+  let location: Location;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ErrorComponent],
+      providers: [{ provide: Location, useValue: location }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ErrorComponent);
@@ -25,10 +21,10 @@ describe('ErrorComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should call timeError method on init', fakeAsync(() => {
-    const timeError = spyOn(component, 'timeError').and.callThrough();
-    component.ngOnInit();
-    tick(3000);
-    expect(timeError).toHaveBeenCalled();
-  }));
+  it('should navigate back to the previous url', () => {
+    location = jasmine.createSpyObj('Location', ['back']);
+    component.navigateBack();
+
+    expect(location.back).toHaveBeenCalled();
+  });
 });

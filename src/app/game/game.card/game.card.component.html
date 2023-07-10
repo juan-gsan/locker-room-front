@@ -9,7 +9,7 @@
   </div>
   <div class="game-title">
     <p>{{ this.game.location.name }}</p>
-    <p>{{this.game.location.location}}</p>
+    <p class="address">{{this.game.location.location}}</p>
     <p>{{ this.game.schedule.toString().slice(0,10) }}</p>
     <p>{{ this.game.schedule.toString().slice(11,-8) }}</p>
   </div>
@@ -20,13 +20,15 @@
     <p>Owner: {{ this.game.owner.userName }}</p>
     <p>Spots: {{ this.game.spotsLeft}}</p>
     <p>Players:</p>
-    <p *ngFor="let item of this.game.players">{{ item.userName }}</p>
+    <ol class="players-list">
+      <li *ngFor="let item of this.game.players">{{ item.userName }}</li>
+    </ol>
   </div>
   <div class="button">
     <button class="join-button" *ngIf="isLogged && !isOwner && !isJoined" (click)="handleJoin()">Join Game</button>
+    <button class="leave-button" *ngIf="isLogged && !isOwner && isJoined" (click)="handleLeave()">Leave Game</button>
     <button class="edit-button" *ngIf="isLogged && isOwner" (click)="handleEdit()">Edit Game</button>
     <button class="delete-button" *ngIf="isLogged && isOwner" (click)="handleDelete()">Delete Game</button>
   </div>
-
 </section>
 <app-menu></app-menu>

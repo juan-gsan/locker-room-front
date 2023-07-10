@@ -1,0 +1,22 @@
+section {
+  .back-arrow {
+    cursor: pointer;
+    position: absolute;
+    left: 0.5rem;
+    top: 1rem;
+  }
+  .text {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    p {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      font-size: 3rem;
+      font-weight: bolder;
+      color: white;
+    }
+  }
+}

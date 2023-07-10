@@ -1,1 +1,11 @@
-<p>{{ errorMessage }}</p>
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<section class="error">
+  <div class="back-arrow" (click)="navigateBack()">
+    <img src="assets/back.arrow.png" alt="back-arrow" height="50">
+  </div>
+  <div class="text">
+    <p>404</p>
+    <p>Not Found</p>
+  </div>
+</section>

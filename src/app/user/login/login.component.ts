@@ -2,8 +2,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { UserLogged } from 'src/types/user.logged';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -39,12 +41,36 @@ export class LoginComponent implements OnInit {
       password: this.login.value.password,
     };
 
-    this.userService.userLogin(loggedUser).subscribe((token) => {
-      this.userService.token$.next(token);
+    this.userService
+      .userLogin(loggedUser)
+      .pipe(
+        catchError(() => {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+            },
+          });
 
-      localStorage.setItem('userToken', JSON.stringify(token));
+          Toast.fire({
+            icon: 'error',
+            title: 'Invalid credentials',
+          });
 
-      this.router.navigateByUrl('game');
-    });
+          throw new Error('Invalid credentials');
+        })
+      )
+      .subscribe((token) => {
+        this.userService.token$.next(token);
+
+        if (token) {
+          localStorage.setItem('userToken', JSON.stringify(token));
+          this.router.navigateByUrl('game');
+        }
+      });
   }
 }

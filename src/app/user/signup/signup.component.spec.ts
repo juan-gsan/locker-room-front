@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -83,7 +84,7 @@ describe('SignupComponent', () => {
     };
     component.signup.setValue(userRegister);
     mockUserService.userRegister.and.returnValue(of());
-
+    component.avatar = new File(['test'], 'test.jpg');
     component.handleSignup();
 
     expect(mockUserService.userRegister).toHaveBeenCalled();

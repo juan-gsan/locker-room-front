@@ -12,25 +12,22 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let mockRouter: jasmine.SpyObj<Router>;
-  let mockUserService: jasmine.SpyObj<UserService>;
+  let mockUserService: UserService;
 
   beforeEach(() => {
-    mockRouter = jasmine.createSpyObj<Router>(['navigate']);
+    mockRouter = jasmine.createSpyObj<Router>(['navigateByUrl']);
 
     const mockToken: Token = {
-      token: 'token',
-      user: { userName: 'test' },
+      token: 'test',
+      user: { userName: 'test', id: 'test' },
     };
 
-    const token$ = new BehaviorSubject<Token>(mockToken);
-
-    mockUserService = jasmine.createSpyObj<UserService>([
-      'userLogin',
-      'userRegister',
-      'token$',
-    ]);
-
-    mockUserService.token$ = token$;
+    const mockUserService = {
+      token$: new BehaviorSubject<Token>(mockToken),
+      userLogin: jasmine
+        .createSpy('userLogin')
+        .and.returnValue(of({ mockToken })),
+    };
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, ReactiveFormsModule],
@@ -50,21 +47,19 @@ describe('LoginComponent', () => {
   });
 
   it('should handle login on submit', () => {
-    const userLogin = { user: 'test', password: 'test' };
-    component.login.setValue(userLogin);
-
-    mockUserService.userLogin.and.returnValue(of());
-    spyOn(Swal, 'fire');
+    const mockUser = { user: 'test', password: 'test' };
+    component.login.setValue(mockUser);
 
     component.handleLogin();
 
-    expect(mockUserService.userLogin).toHaveBeenCalledWith(userLogin);
+    expect(mockUserService.userLogin).toHaveBeenCalledWith(mockUser);
+    expect(mockUserService.token$.next).toHaveBeenCalled();
   });
-  it('should handle error on submit', () => {
-    const userLogin = { user: 'test', passwd: 'test' };
-    component.login.setValue(userLogin);
 
-    mockUserService.userLogin.and.returnValue(throwError('error'));
+  it('should handle error on submit', () => {
+    const mockUser = { user: 'test', password: 'test' };
+    component.login.setValue(mockUser);
+
     spyOn(Swal, 'fire');
 
     component.handleLogin();

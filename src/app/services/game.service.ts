@@ -14,8 +14,8 @@ import { UserService } from './user.service';
   providedIn: 'root',
 })
 export class GameService {
-  public urlLocal = 'http://localhost:9999/game/';
-  public url = 'https://lockerroom.onrender.com/game/';
+  public url = 'http://localhost:9999/game/';
+  public urlRender = 'https://lockerroom.onrender.com/game/';
   games$: BehaviorSubject<Game[]>;
   game$: BehaviorSubject<Game>;
   next$: BehaviorSubject<string | null>;
@@ -65,7 +65,17 @@ export class GameService {
       'Bearer ' + this.userService.token$.value.token
     );
     return this.http
-      .patch(this.url + id, game, { headers })
+      .patch(this.url + 'join/' + id, game, { headers })
+      .pipe(catchError(this.handleError));
+  }
+
+  leaveGame(id: string, game: Partial<Game>) {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      'Bearer ' + this.userService.token$.value.token
+    );
+    return this.http
+      .patch(this.url + 'leave/' + id, game, { headers })
       .pipe(catchError(this.handleError));
   }
 

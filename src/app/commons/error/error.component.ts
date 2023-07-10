@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @angular-eslint/use-lifecycle-interface */
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-error',
@@ -8,21 +9,9 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./error.component.scss'],
 })
 export class ErrorComponent {
-  @Input() errorMessage = '';
+  constructor(public location: Location) {}
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.timeError();
-  }
-
-  ngOnDestroy(): void {
-    this.errorMessage = '';
-  }
-
-  timeError() {
-    setTimeout(() => {
-      this.errorMessage = '';
-    }, 2500);
+  navigateBack() {
+    this.location.back();
   }
 }

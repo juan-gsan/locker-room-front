@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
+import { UserService } from 'src/app/services/user.service';
 import { Game } from 'src/models/game';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-game.list',
@@ -11,17 +13,22 @@ export class GameListComponent implements OnInit {
   items: Game[] = [];
   next: string | null = null;
   prev: string | null = null;
-  selectedFilter = '';
-  constructor(public gameService: GameService) {}
+  currentUser: Partial<User> = {};
+  constructor(
+    public gameService: GameService,
+    public userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.loadAllGames();
+    this.userService.token$.subscribe(
+      (token) => (this.currentUser = token.user)
+    );
   }
 
   loadAllGames(): void {
     this.gameService.getAllGames().subscribe((games) => {
       this.items = games;
-      console.log(games);
       this.gameService.games$.next(games);
       this.next = this.gameService.next$.value;
       this.prev = this.gameService.prev$.value;

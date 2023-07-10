@@ -1,6 +1,14 @@
 <section class="game-list">
+  <div class="greetings-games" *ngIf="this.currentUser.id">
+    <h1>Hello, {{ this.currentUser.userName }}</h1>
+    <img src="{{ this.currentUser.avatar?.url }}" alt="{{ this.currentUser.userName }}" width="64px" height="64px">
+  </div>
   <div class="title-games">
     <h2>GAMES</h2>
+  </div>
+  <div class="map-container">
+    <iframe class="map" src="https://www.google.com/maps/d/u/2/embed?mid=1zVaATtZ172M8IMNj-NJSf0WfFr_iiw8&ehbc=2E312F"
+      width="450" height="350"></iframe>
   </div>
   <div class="filter-container">
     <button class="f11" data-id="f11">11 vs 11</button>
@@ -30,5 +38,4 @@
     <button class="next" (click)="handleNext()" [disabled]="(gameService.next$ | async) === null">Next</button>
   </div>
 </section>
-
 <app-menu></app-menu>

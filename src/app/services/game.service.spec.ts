@@ -41,6 +41,20 @@ describe('GameService', () => {
     });
   });
 
+  describe('When getGame is called', () => {
+    it('Should get a single game', () => {
+      const mockGame = {} as Game;
+      const mockId = '1';
+
+      gameService.getGame(mockId).subscribe();
+
+      const req = httpMock.expectOne(gameService.url + '1');
+      expect(req.request.method).toBe('GET');
+
+      req.flush(mockGame);
+    });
+  });
+
   describe('When createGame is called', () => {
     it('Should create a new game', () => {
       const mockGame: Partial<Game> = {};
@@ -60,7 +74,21 @@ describe('GameService', () => {
       const mockId = '123';
       gameService.joinGame(mockId, mockGame).subscribe();
 
-      const req = httpMock.expectOne(gameService.url + mockId);
+      const req = httpMock.expectOne(gameService.url + 'join/' + mockId);
+      expect(req.request.method).toBe('PATCH');
+      expect(req.request.headers.get('Authorization')).toContain('Bearer ');
+
+      req.flush(mockGame);
+    });
+  });
+
+  describe('When leaveGame is called', () => {
+    it('Should update the current game', () => {
+      const mockGame: Partial<Game> = {};
+      const mockId = '123';
+      gameService.leaveGame(mockId, mockGame).subscribe();
+
+      const req = httpMock.expectOne(gameService.url + 'leave/' + mockId);
       expect(req.request.method).toBe('PATCH');
       expect(req.request.headers.get('Authorization')).toContain('Bearer ');
 

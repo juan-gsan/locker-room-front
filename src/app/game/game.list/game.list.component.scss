@@ -1,10 +1,32 @@
 section {
   background-color: white;
+  .map-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    iframe {
+      max-width: 450px;
+      width: 90%;
+      border-radius: 20px;
+    }
+  }
   @media (min-width: 500px) {
     ul {
       li {
         max-width: 450px;
       }
+    }
+  }
+
+  .greetings-games {
+    text-align: center;
+    margin: 2rem;
+    font-size: 1rem;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    img {
+      object-fit: cover;
+      border-radius: 100%;
+      margin-top: 1rem;
     }
   }
   .title-games {
