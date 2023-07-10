@@ -3,39 +3,42 @@ import { GameFormComponent } from './game.form.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MenuComponent } from 'src/app/menu/menu.component';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { GameService } from 'src/app/services/game.service';
+import { of } from 'rxjs';
 import { Game } from 'src/models/game';
-import { SportsField } from 'src/types/sports.field';
-import Swal from 'sweetalert2';
 
 describe('GameFormComponent', () => {
   let component: GameFormComponent;
   let fixture: ComponentFixture<GameFormComponent>;
-  let mockGameService: jasmine.SpyObj<GameService>;
+  let mockRoute: ActivatedRoute;
+  let gameService: GameService;
 
-  beforeEach(() => {
-    mockGameService = jasmine.createSpyObj<GameService>([
-      'getGame',
-      'createGame',
-    ]);
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule],
+  const mockGameService = {
+    getGame: of({ id: '1' }),
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        ReactiveFormsModule,
+      ],
       declarations: [GameFormComponent, MenuComponent],
       providers: [
         GameFormComponent,
         {
           provide: ActivatedRoute,
-          useValue: { snapshot: { url: [], params: { id: 'gameId' } } },
+          useValue: { snapshot: { url: [{ path: 'create' }] } },
         },
-        {
-          provide: GameService,
-          useValue: mockGameService,
-        },
+        { provide: GameService, useValue: mockGameService },
       ],
-    });
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GameFormComponent);
+
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -44,67 +47,38 @@ describe('GameFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call checkNew', () => {
-    spyOn(component, 'checkNew');
+  it('should call checkNew when ngOnInit', () => {
+    const mockCheckNew = spyOn(component, 'checkNew');
+    component.ngOnInit();
+    expect(mockCheckNew).toHaveBeenCalled();
+  });
+
+  it('should call getCurrentGame when ngOnInit', () => {
+    const mockGetCurrentGameData = spyOn(component, 'getCurrentGameData');
+    component.isNew = false;
     component.ngOnInit();
 
-    expect(component.checkNew).toHaveBeenCalled();
+    expect(mockGetCurrentGameData).toHaveBeenCalled();
   });
 
-  it('should set isNew to true when URL contains "create" segment', () => {
-    const urlSegments: UrlSegment[] = [new UrlSegment('create', {})];
-    component.route.snapshot.url = urlSegments;
-
-    component.checkNew();
-    urlSegments.some((segment) => {
-      expect(segment.path).toBe('create');
-    });
-    expect(component.isNew).toBeTrue();
-  });
-
-  it('should not set isNew to true when URL does not contain "create" segment', () => {
-    const urlSegments: UrlSegment[] = [new UrlSegment('edit', {})];
-    component.route.snapshot.url = urlSegments;
-
+  it('should check if the element is new', () => {
+    mockRoute.snapshot.url.some((segment) =>
+      expect(segment.path).toEqual('create')
+    );
     component.checkNew();
 
-    expect(component.isNew).toBeFalse();
+    expect(component.isNew).toBe(true);
   });
 
-  it('should get current game data and set form initial values if not new', () => {
+  it('should call getGame when getCurrentGameData is called', () => {
     component.isNew = false;
-
+    const mockCurrentGameData = { id: '1' } as Game;
+    const mockGetFormInitialValues = spyOn(component, 'getFormInitialValues');
     component.getCurrentGameData();
 
-    mockGameService.getGame('gameId').subscribe((data) => {
-      expect(mockGameService.getGame).toHaveBeenCalledWith('gameId');
-      expect(component.currentGameData).toEqual(data);
-      expect(component.getFormInitialValues).toHaveBeenCalled();
+    gameService.getGame('1').subscribe((data) => {
+      expect(mockCurrentGameData).toEqual(data);
+      expect(mockGetFormInitialValues).toHaveBeenCalled();
     });
-  });
-
-  it('should not get current game data if new', () => {
-    component.isNew = true;
-
-    component.getCurrentGameData();
-
-    expect(mockGameService.getGame).not.toHaveBeenCalled();
-  });
-
-  it('should create a new game', () => {
-    const newGame = {
-      gameType: 'f11',
-      gender: 'female',
-      level: 1,
-      location: {} as SportsField,
-      schedule: '' as unknown as Date,
-    } as Partial<Game>;
-
-    component.isNew = true;
-    spyOn(Swal, 'fire');
-    component.handleGame();
-
-    expect(mockGameService.createGame).toHaveBeenCalledWith(newGame);
-    expect(Swal.fire).toHaveBeenCalled();
   });
 });

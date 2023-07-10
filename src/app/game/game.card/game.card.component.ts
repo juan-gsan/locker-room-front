@@ -17,10 +17,10 @@ export class GameCardComponent implements OnInit {
   isOwner = false;
   isJoined = false;
   constructor(
-    private gameService: GameService,
-    private userService: UserService,
-    private route: ActivatedRoute,
-    private router: Router
+    public gameService: GameService,
+    public userService: UserService,
+    public route: ActivatedRoute,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -40,22 +40,18 @@ export class GameCardComponent implements OnInit {
   }
 
   checkToken() {
-    console.log(this.isLogged);
     this.userService.token$.subscribe((token) => {
       if (token.token) {
         this.isLogged = true;
-        console.log(this.isLogged);
       }
     });
   }
 
   checkOwner() {
-    console.log(this.isOwner);
     this.userService.token$.subscribe((token) => {
       this.gameService.game$.subscribe((game) => {
         if (token.user.id === game.owner.id) {
           this.isOwner = true;
-          console.log(this.isOwner);
         }
       });
     });

@@ -63,12 +63,12 @@ describe('LoginComponent', () => {
   });
 
   it('should handle error on submit', () => {
-    const userLogin = { user: 'test', passwd: 'test' };
+    const userLogin = { user: 'test', password: 'test' };
+    console.log(userLogin);
     component.login.setValue(userLogin);
 
     mockUserService.userLogin.and.returnValue(throwError('error'));
     spyOn(Swal, 'fire');
-
     component.handleLogin();
 
     expect(Swal.fire).toHaveBeenCalled();
