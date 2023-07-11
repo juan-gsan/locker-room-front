@@ -5,7 +5,6 @@ import { Location } from '@angular/common';
 describe('ErrorComponent', () => {
   let component: ErrorComponent;
   let fixture: ComponentFixture<ErrorComponent>;
-  let location: Location;
 
   const mockLocation = jasmine
     .createSpy('location')
@@ -18,7 +17,6 @@ describe('ErrorComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(ErrorComponent);
-    location = TestBed.inject(Location);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
