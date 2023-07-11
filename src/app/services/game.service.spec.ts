@@ -48,7 +48,7 @@ describe('GameService', () => {
 
       gameService.getGame(mockId).subscribe();
 
-      const req = httpMock.expectOne(gameService.url + '1');
+      const req = httpMock.expectOne(gameService.url + '/1');
       expect(req.request.method).toBe('GET');
 
       req.flush(mockGame);
@@ -60,7 +60,7 @@ describe('GameService', () => {
       const mockGame: Partial<Game> = {};
       gameService.createGame(mockGame).subscribe();
 
-      const req = httpMock.expectOne(gameService.url + 'create');
+      const req = httpMock.expectOne(gameService.url + '/create/');
       expect(req.request.method).toBe('POST');
       expect(req.request.headers.get('Authorization')).toContain('Bearer ');
 
@@ -74,7 +74,7 @@ describe('GameService', () => {
       const mockId = '123';
       gameService.joinGame(mockId, mockGame).subscribe();
 
-      const req = httpMock.expectOne(gameService.url + 'join/' + mockId);
+      const req = httpMock.expectOne(gameService.url + '/join/' + mockId);
       expect(req.request.method).toBe('PATCH');
       expect(req.request.headers.get('Authorization')).toContain('Bearer ');
 
@@ -88,7 +88,7 @@ describe('GameService', () => {
       const mockId = '123';
       gameService.leaveGame(mockId, mockGame).subscribe();
 
-      const req = httpMock.expectOne(gameService.url + 'leave/' + mockId);
+      const req = httpMock.expectOne(gameService.url + '/leave/' + mockId);
       expect(req.request.method).toBe('PATCH');
       expect(req.request.headers.get('Authorization')).toContain('Bearer ');
 
@@ -102,7 +102,7 @@ describe('GameService', () => {
       const mockId = '123';
       gameService.editGame(mockId, mockGame).subscribe();
 
-      const req = httpMock.expectOne(gameService.url + 'edit/' + mockId);
+      const req = httpMock.expectOne(gameService.url + '/edit/' + mockId);
       expect(req.request.method).toBe('PATCH');
       expect(req.request.headers.get('Authorization')).toContain('Bearer ');
 
@@ -115,7 +115,7 @@ describe('GameService', () => {
       const mockId = '123';
       gameService.deleteGame(mockId).subscribe();
 
-      const req = httpMock.expectOne(gameService.url + mockId);
+      const req = httpMock.expectOne(gameService.url + '/' + mockId);
       expect(req.request.method).toBe('DELETE');
       expect(req.request.headers.get('Authorization')).toContain('Bearer ');
     });

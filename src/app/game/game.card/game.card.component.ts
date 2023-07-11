@@ -63,7 +63,6 @@ export class GameCardComponent implements OnInit {
         for (let i = 0; i < game.players.length; i++) {
           if (game.players[i].id === token.user.id) {
             this.isJoined = true;
-            console.log(this.isJoined);
           }
         }
       });

@@ -63,8 +63,6 @@ export class GameListComponent implements OnInit {
         this.gameService.games$.next(games);
         this.next = this.gameService.next$.value;
         this.prev = this.gameService.prev$.value;
-        console.log(this.next);
-        console.log(this.prev);
       });
   }
 }
