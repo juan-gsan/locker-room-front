@@ -14,8 +14,8 @@ import { UserService } from './user.service';
   providedIn: 'root',
 })
 export class GameService {
-  public url = 'http://localhost:9999/game/';
-  public urlRender = 'https://lockerroom.onrender.com/game/';
+  public url = 'http://localhost:9999/game';
+  public urlRender = 'https://lockerroom.onrender.com/game';
   games$: BehaviorSubject<Game[]>;
   game$: BehaviorSubject<Game>;
   next$: BehaviorSubject<string | null>;
@@ -30,9 +30,12 @@ export class GameService {
     this.prev$ = new BehaviorSubject<string | null>(null);
   }
 
-  getAllGames(url: string = this.url): Observable<Game[]> {
+  getAllGames(url: string = this.url, filter?: string): Observable<Game[]> {
+    let urlToSend;
+    !filter ? (urlToSend = url) : (urlToSend = `${url}?filter=${filter}`);
+
     return this.http
-      .get<ApiResponse>(url)
+      .get<ApiResponse>(urlToSend)
       .pipe(
         map((response) => {
           this.next$.next(response.next);
@@ -45,7 +48,7 @@ export class GameService {
 
   getGame(id: string): Observable<Game> {
     return this.http
-      .get<Game>(this.url + id)
+      .get<Game>(this.url + '/' + id)
       .pipe(catchError(this.handleError));
   }
 
@@ -55,7 +58,7 @@ export class GameService {
       'Bearer ' + this.userService.token$.value.token
     );
     return this.http
-      .post(this.url + 'create', game, { headers })
+      .post(this.url + '/create/', game, { headers })
       .pipe(catchError(this.handleError));
   }
 
@@ -65,7 +68,7 @@ export class GameService {
       'Bearer ' + this.userService.token$.value.token
     );
     return this.http
-      .patch(this.url + 'join/' + id, game, { headers })
+      .patch(this.url + '/join/' + id, game, { headers })
       .pipe(catchError(this.handleError));
   }
 
@@ -75,7 +78,7 @@ export class GameService {
       'Bearer ' + this.userService.token$.value.token
     );
     return this.http
-      .patch(this.url + 'leave/' + id, game, { headers })
+      .patch(this.url + '/leave/' + id, game, { headers })
       .pipe(catchError(this.handleError));
   }
 
@@ -85,7 +88,7 @@ export class GameService {
       'Bearer ' + this.userService.token$.value.token
     );
     return this.http
-      .patch(this.url + 'edit/' + id, game, { headers })
+      .patch(this.url + '/edit/' + id, game, { headers })
       .pipe(catchError(this.handleError));
   }
 
@@ -94,7 +97,7 @@ export class GameService {
       'Authorization',
       'Bearer ' + this.userService.token$.value.token
     );
-    return this.http.delete(this.url + id, { headers });
+    return this.http.delete(this.url + '/' + id, { headers });
   }
   handleError(error: HttpErrorResponse) {
     return throwError(() => `${error.statusText}`);

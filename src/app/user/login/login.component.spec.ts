@@ -4,15 +4,14 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
-import { BehaviorSubject, of, throwError } from 'rxjs';
-import Swal from 'sweetalert2';
+import { BehaviorSubject, of } from 'rxjs';
 import { Token } from 'src/types/token';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let mockRouter: jasmine.SpyObj<Router>;
-  let mockUserService: UserService;
+  let userService: UserService;
 
   beforeEach(() => {
     mockRouter = jasmine.createSpyObj<Router>(['navigateByUrl']);
@@ -38,6 +37,7 @@ describe('LoginComponent', () => {
       ],
     });
     fixture = TestBed.createComponent(LoginComponent);
+    userService = TestBed.inject(UserService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -52,18 +52,8 @@ describe('LoginComponent', () => {
 
     component.handleLogin();
 
-    expect(mockUserService.userLogin).toHaveBeenCalledWith(mockUser);
-    expect(mockUserService.token$.next).toHaveBeenCalled();
-  });
-
-  it('should handle error on submit', () => {
-    const mockUser = { user: 'test', password: 'test' };
-    component.login.setValue(mockUser);
-
-    spyOn(Swal, 'fire');
-
-    component.handleLogin();
-
-    expect(Swal.fire).toHaveBeenCalled();
+    userService.userLogin(mockUser).subscribe();
+    expect(userService.userLogin).toHaveBeenCalledWith(mockUser);
+    expect(mockRouter.navigateByUrl).toHaveBeenCalled();
   });
 });

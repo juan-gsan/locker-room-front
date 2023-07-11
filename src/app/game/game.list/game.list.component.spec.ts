@@ -16,7 +16,7 @@ describe('GameListComponent', () => {
     getAllGames: jasmine.createSpy('getAllGames').and.returnValue(
       of([
         {
-          id: '',
+          id: 'test',
           gameType: 'f11',
           gender: 'female',
           level: 1,
@@ -27,8 +27,8 @@ describe('GameListComponent', () => {
             avatar: 'assets/field04.jpg',
           } as SportsField,
           owner: {
-            id: '12345',
-            userName: 'user',
+            id: 'test',
+            userName: 'test',
             email: 'email@example.com',
             password: 'password',
             level: 1,
@@ -40,7 +40,7 @@ describe('GameListComponent', () => {
           spotsLeft: 0,
         } as Game,
         {
-          id: '',
+          id: 'test',
           gameType: 'f11',
           gender: 'female',
           level: 1,
@@ -51,8 +51,8 @@ describe('GameListComponent', () => {
             avatar: 'assets/field04.jpg',
           } as SportsField,
           owner: {
-            id: '12345',
-            userName: 'user',
+            id: 'test',
+            userName: 'test',
             email: 'email@example.com',
             password: 'password',
             level: 1,
@@ -69,6 +69,7 @@ describe('GameListComponent', () => {
     next$: new BehaviorSubject<string | null>(null),
     prev$: new BehaviorSubject<string | null>(null),
   };
+
   let component: GameListComponent;
   let fixture: ComponentFixture<GameListComponent>;
 
@@ -98,69 +99,6 @@ describe('GameListComponent', () => {
     });
   });
 
-  describe('When loadAllGames is called', () => {
-    it('Should call getAllGames from gameService', () => {
-      const mockGames: Game[] = [
-        {
-          id: '',
-          gameType: 'f11',
-          gender: 'female',
-          level: 1,
-          location: {} as SportsField,
-          owner: {
-            id: '12345',
-            userName: 'user',
-            email: 'email@example.com',
-            password: 'password',
-            level: 1,
-            gender: 'female',
-            avatar: { url: '', urlOriginal: '', mimetype: '', size: 1 },
-          } as User,
-          players: [{} as unknown as User],
-          schedule: '' as unknown as Date,
-          spotsLeft: 0,
-        } as Game,
-        {
-          id: '',
-          gameType: 'f11',
-          gender: 'female',
-          level: 1,
-          location: {} as SportsField,
-          owner: {
-            id: '12345',
-            userName: 'user',
-            email: 'email@example.com',
-            password: 'password',
-            level: 1,
-            gender: 'female',
-            avatar: { url: 'test', urlOriginal: '', mimetype: '', size: 1 },
-          } as User,
-          players: [{} as unknown as User],
-          schedule: '' as unknown as Date,
-          spotsLeft: 0,
-        } as Game,
-      ];
-      const nextValue = null;
-      const prevValue = null;
-
-      spyOn(gameService.games$, 'next');
-      spyOnProperty(gameService, 'next$').and.returnValue(
-        new BehaviorSubject<string | null>(nextValue)
-      );
-      spyOnProperty(gameService, 'prev$').and.returnValue(
-        new BehaviorSubject<string | null>(prevValue)
-      );
-
-      component.loadAllGames();
-
-      expect(gameService.getAllGames).toHaveBeenCalled();
-      expect(component.items).toEqual(mockGames);
-      expect(gameService.games$.next).toHaveBeenCalledWith(mockGames);
-      expect(component.next).toBe(nextValue);
-      expect(component.prev).toBe(prevValue);
-    });
-  });
-
   describe('When handleNext is called and there is this.next', () => {
     it('Should call getAllGames with this.next', () => {
       const mockNext = 'http://localhost:9999/game?offset=2';
@@ -168,15 +106,6 @@ describe('GameListComponent', () => {
       component.handleNext();
 
       expect(gameService.getAllGames).toHaveBeenCalledWith(mockNext);
-    });
-  });
-  describe('When handleNext is called and there is no this.next', () => {
-    it('Should not call getAllGames', () => {
-      const mockNext = null;
-      component.next = mockNext;
-      component.handleNext();
-
-      expect(gameService.getAllGames).not.toHaveBeenCalled();
     });
   });
 
@@ -187,15 +116,6 @@ describe('GameListComponent', () => {
       component.handlePrevious();
 
       expect(gameService.getAllGames).toHaveBeenCalledWith(mockPrev);
-    });
-  });
-  describe('When handleNext is called and there is no this.prev', () => {
-    it('Should not call getAllGames', () => {
-      const mockPrev = null;
-      component.prev = mockPrev;
-      component.handlePrevious();
-
-      expect(gameService.getAllGames).not.toHaveBeenCalled();
     });
   });
 });

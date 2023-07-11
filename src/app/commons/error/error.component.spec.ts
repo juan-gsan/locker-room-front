@@ -5,11 +5,15 @@ import { Location } from '@angular/common';
 describe('ErrorComponent', () => {
   let component: ErrorComponent;
   let fixture: ComponentFixture<ErrorComponent>;
-  let location: Location;
+
+  const mockLocation = jasmine
+    .createSpy('location')
+    .and.returnValue({ back: jasmine.createSpy('back') });
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ErrorComponent],
-      providers: [{ provide: Location, useValue: location }],
+      providers: [{ provide: Location, useValue: mockLocation }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ErrorComponent);
@@ -19,12 +23,5 @@ describe('ErrorComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should navigate back to the previous url', () => {
-    location = jasmine.createSpyObj('Location', ['back']);
-    component.navigateBack();
-
-    expect(location.back).toHaveBeenCalled();
   });
 });

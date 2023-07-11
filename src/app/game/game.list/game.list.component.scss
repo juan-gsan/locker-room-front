@@ -39,9 +39,10 @@ section {
   .filter-container {
     width: 80%;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     margin-top: 1rem;
     margin: 1rem auto;
+
     button {
       background-color: black;
       color: white;
@@ -49,10 +50,6 @@ section {
       border-radius: 20px;
       padding: 0.5rem 1rem;
       cursor: pointer;
-    }
-    .f7,
-    .f5 {
-      margin-left: 2rem;
     }
   }
   ul {

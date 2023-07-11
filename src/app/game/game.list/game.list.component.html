@@ -11,9 +11,10 @@
       width="450" height="350"></iframe>
   </div>
   <div class="filter-container">
-    <button class="f11" data-id="f11">11 vs 11</button>
-    <button class="f7" data-id="f7">7 vs 7</button>
-    <button class="f5" data-id="f5">5 vs 5</button>
+    <button class="f11" data-id="f11" (click)="handleFilter('f11')">11 vs 11</button>
+    <button class="f7" data-id="f7" (click)="handleFilter('f7')">7 vs 7</button>
+    <button class="f5" data-id="f5" (click)="handleFilter('f5')">5 vs 5</button>
+    <button class="show-all" data-id="all" (click)="loadAllGames()">Show all</button>
   </div>
   <ul>
     <li *ngFor="let item of gameService.games$ | async">
