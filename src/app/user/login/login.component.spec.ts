@@ -5,7 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { BehaviorSubject, of } from 'rxjs';
-import Swal from 'sweetalert2';
 import { Token } from 'src/types/token';
 
 describe('LoginComponent', () => {

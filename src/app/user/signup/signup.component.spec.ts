@@ -4,8 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
-import { of, throwError } from 'rxjs';
-import Swal from 'sweetalert2';
+import { of } from 'rxjs';
 import { SignupComponent } from './signup.component';
 
 describe('SignupComponent', () => {
