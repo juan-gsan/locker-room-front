@@ -27,7 +27,7 @@ describe('GameService', () => {
   describe('When getAllGames is called', () => {
     it('Should get the games array', () => {
       const mockResponse = {
-        items: [{} as Game],
+        items: [{}, {}] as Game[],
         next: '',
         prev: '',
       };
@@ -35,6 +35,23 @@ describe('GameService', () => {
       gameService.getAllGames().subscribe();
 
       const req = httpMock.expectOne(gameService.url);
+      expect(req.request.method).toBe('GET');
+
+      req.flush(mockResponse);
+    });
+  });
+  describe('When getAllGames is called with filter', () => {
+    it('Should get the games array', () => {
+      const mockResponse = {
+        items: [{}, {}] as Game[],
+        next: '',
+        prev: '',
+      };
+
+      const mockUrl = 'http://localhost:9999/game';
+      gameService.getAllGames(mockUrl, 'f11').subscribe();
+
+      const req = httpMock.expectOne(gameService.url + '?filter=f11');
       expect(req.request.method).toBe('GET');
 
       req.flush(mockResponse);
