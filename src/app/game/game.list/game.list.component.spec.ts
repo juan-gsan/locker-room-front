@@ -118,4 +118,32 @@ describe('GameListComponent', () => {
       expect(gameService.getAllGames).toHaveBeenCalledWith(mockPrev);
     });
   });
+
+  describe('When handleNext is called with filter and there is this.next', () => {
+    it('Should call getAllGames with this.next', () => {
+      const mockNext = 'http://localhost:9999/game?filter=f5?offset=2';
+      const mockFilter = 'f5';
+      component.next = mockNext;
+      component.handleNext();
+
+      expect(gameService.getAllGames).toHaveBeenCalledWith(
+        mockNext,
+        mockFilter
+      );
+    });
+  });
+
+  describe('When handlePrev is called and there is this.prev', () => {
+    it('Should call getAllGames with this.prev', () => {
+      const mockPrev = 'http://localhost:9999/game?filter=f11?offset=1';
+      const mockFilter = 'f11';
+      component.prev = mockPrev;
+      component.handlePrevious();
+
+      expect(gameService.getAllGames).toHaveBeenCalledWith(
+        mockPrev,
+        mockFilter
+      );
+    });
+  });
 });

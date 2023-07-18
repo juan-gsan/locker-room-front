@@ -6,7 +6,6 @@ import { LayoutComponent } from './layout/layout/layout.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { UserService } from './services/user.service';
 import { of } from 'rxjs';
-import { User } from 'src/models/user';
 
 describe('AppComponent', () => {
   let userService: UserService;
@@ -49,15 +48,34 @@ describe('AppComponent', () => {
     it('Should call next with the userInfo', () => {
       userService = TestBed.inject(UserService);
       const fixture = TestBed.createComponent(AppComponent);
-      const mockUserInfo = { token: '12345', user: {} as User };
+
       const app = fixture.componentInstance;
       spyOn(localStorage, 'getItem').and.returnValue(
-        JSON.stringify(mockUserInfo)
+        JSON.stringify({
+          token: 'test',
+          user: { userName: 'test', id: 'test' },
+        })
       );
 
       app.getInitialToken();
 
-      expect(userService.token$.next).toHaveBeenCalledOnceWith(mockUserInfo);
+      expect(userService.token$.next).toHaveBeenCalledOnceWith({
+        token: 'test',
+        user: { userName: 'test', id: 'test' },
+      });
+    });
+  });
+
+  describe('When getInitialToken is called and there is no token', () => {
+    it('Should not call next', () => {
+      userService = TestBed.inject(UserService);
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.componentInstance;
+      spyOn(localStorage, 'getItem').and.returnValue('{}');
+
+      app.getInitialToken();
+
+      expect(userService.token$.next).not.toHaveBeenCalled();
     });
   });
 });
