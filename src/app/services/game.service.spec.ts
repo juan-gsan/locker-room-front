@@ -48,7 +48,7 @@ describe('GameService', () => {
         prev: '',
       };
 
-      const mockUrl = 'http://localhost:9999/game';
+      const mockUrl = 'https://lockerroom.onrender.com/game';
       gameService.getAllGames(mockUrl, 'f11').subscribe();
 
       const req = httpMock.expectOne(gameService.url + '?filter=f11');
