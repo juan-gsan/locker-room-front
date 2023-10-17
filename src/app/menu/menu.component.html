@@ -1,7 +1,7 @@
 <section class="menu-list" *ngIf="isRegistered">
   <ul>
     <li *ngFor="let item of menuOptions">
-      <a [routerLink]="item.path" (click)="item.label === 'Log Out' ? handleLogout() : null">
+      <a routerLink="item.path" (click)="item.label === 'Log Out' ? handleLogout() : null">
         <div>
           <img src="assets/{{item.image}}.png" alt="{{item.label}}">
           <p>{{item.label}}</p>
