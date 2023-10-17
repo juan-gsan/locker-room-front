@@ -5,15 +5,15 @@ import { GameListComponent } from './game.list/game.list.component';
 import { RouterModule } from '@angular/router';
 import { GameCardComponent } from './game.card/game.card.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MenuComponent } from '../menu/menu.component';
 import { GameFormComponent } from './game.form/game.form.component';
+import { MenuComponent } from '../menu/menu.component';
 
 @NgModule({
   declarations: [
+    MenuComponent,
     GameListComponent,
     GameCardComponent,
     GameFormComponent,
-    MenuComponent,
   ],
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
 })
