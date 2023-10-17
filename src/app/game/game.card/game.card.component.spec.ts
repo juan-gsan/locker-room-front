@@ -10,6 +10,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MenuComponent } from 'src/app/menu/menu.component';
 import { Token } from '@angular/compiler';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { mockGame, mockToken } from 'src/mocks/mocks';
 
 describe('GameCardComponent', () => {
   let gameService: GameService;
@@ -162,31 +163,6 @@ describe('GameCardComponent', () => {
 
   describe('When loadGameCard is called', () => {
     it('Should call getGame', () => {
-      const mockGame = {
-        id: 'test',
-        gameType: 'f11',
-        gender: 'female',
-        level: 1,
-        location: {
-          id: '4',
-          name: 'CD Municipal La Chopera',
-          location: 'Paseo de Fernán Núñez 3, 28009 Madrid',
-          avatar: 'assets/field04.jpg',
-        } as SportsField,
-        owner: {
-          id: 'test',
-          userName: 'test',
-          email: 'email@example.com',
-          password: 'password',
-          level: 1,
-          gender: 'female',
-          avatar: { url: '', urlOriginal: '', mimetype: '', size: 1 },
-        } as User,
-        players: [{} as unknown as User],
-        schedule: '' as unknown as Date,
-        spotsLeft: 0,
-      } as Game;
-
       mockGameService.getGame.and.returnValue(of(mockGame));
       component.loadGameCard('test');
       expect(mockGameService.getGame).toHaveBeenCalledWith('test');
@@ -195,7 +171,6 @@ describe('GameCardComponent', () => {
 
   describe('When checkToken is called', () => {
     it('Should check if there is token', () => {
-      const mockToken = { token: 'token', user: {} };
       spyOn(userService.token$, 'subscribe').and.callThrough();
 
       component.checkToken();
@@ -208,28 +183,6 @@ describe('GameCardComponent', () => {
 
   describe('When checkOwner is called', () => {
     it('Should check if there is owner', () => {
-      const mockUser = {
-        id: 'user',
-        userName: 'test',
-        email: 'email@example.com',
-        password: 'password',
-        avatar: { url: '', urlOriginal: '', mimetype: '', size: 1 },
-      };
-      const mockToken = { token: 'token', user: mockUser };
-      const mockGame = {
-        id: 'test',
-        gameType: 'f11',
-        location: {
-          id: '4',
-          name: 'CD Municipal La Chopera',
-          location: 'Paseo de Fernán Núñez 3, 28009 Madrid',
-          avatar: 'assets/field04.jpg',
-        } as SportsField,
-        owner: mockUser,
-        players: [mockUser],
-        schedule: '' as unknown as Date,
-        spotsLeft: 0,
-      } as Game;
       spyOn(userService.token$, 'subscribe').and.callThrough;
       spyOn(gameService.game$, 'subscribe').and.callThrough;
       userService.token$.next(mockToken);
@@ -239,34 +192,12 @@ describe('GameCardComponent', () => {
 
       expect(userService.token$.subscribe).toHaveBeenCalled();
       expect(gameService.game$.subscribe).toHaveBeenCalled();
-      expect(component.isOwner).toBe(false);
+      expect(component.isOwner).toBe(true);
     });
   });
 
   describe('When checkJoined is called', () => {
     it('Should check if the user is joined', () => {
-      const mockUser = {
-        id: 'user',
-        userName: 'test',
-        email: 'email@example.com',
-        password: 'password',
-        avatar: { url: '', urlOriginal: '', mimetype: '', size: 1 },
-      };
-      const mockToken = { token: 'user', user: mockUser };
-      const mockGame = {
-        id: 'test',
-        gameType: 'f11',
-        location: {
-          id: '4',
-          name: 'CD Municipal La Chopera',
-          location: 'Paseo de Fernán Núñez 3, 28009 Madrid',
-          avatar: 'assets/field04.jpg',
-        } as SportsField,
-        owner: mockUser,
-        players: [mockUser],
-        schedule: '' as unknown as Date,
-        spotsLeft: 0,
-      } as Game;
       spyOn(userService.token$, 'subscribe').and.callThrough();
       spyOn(gameService.game$, 'subscribe').and.callThrough();
 
@@ -283,28 +214,6 @@ describe('GameCardComponent', () => {
 
   describe('When handleJoin is called', () => {
     it('Should', () => {
-      const mockUser = {
-        id: 'user',
-        userName: 'test',
-        email: 'email@example.com',
-        password: 'password',
-        avatar: { url: '', urlOriginal: '', mimetype: '', size: 1 },
-      };
-      const mockToken = { token: 'user', user: mockUser };
-      const mockGame = {
-        id: 'test',
-        gameType: 'f11',
-        location: {
-          id: '4',
-          name: 'CD Municipal La Chopera',
-          location: 'Paseo de Fernán Núñez 3, 28009 Madrid',
-          avatar: 'assets/field04.jpg',
-        } as SportsField,
-        owner: {} as User,
-        players: [{} as User],
-        schedule: '' as unknown as Date,
-        spotsLeft: 0,
-      } as Game;
       spyOn(gameService.game$, 'subscribe').and.callThrough();
       gameService.game$.next(mockGame);
       userService.token$.next(mockToken);
@@ -324,28 +233,6 @@ describe('GameCardComponent', () => {
 
   describe('When handleLeave is called', () => {
     it('Should', () => {
-      const mockUser = {
-        id: 'user',
-        userName: 'test',
-        email: 'email@example.com',
-        password: 'password',
-        avatar: { url: '', urlOriginal: '', mimetype: '', size: 1 },
-      };
-      const mockToken = { token: 'user', user: mockUser };
-      const mockGame = {
-        id: 'test',
-        gameType: 'f11',
-        location: {
-          id: '4',
-          name: 'CD Municipal La Chopera',
-          location: 'Paseo de Fernán Núñez 3, 28009 Madrid',
-          avatar: 'assets/field04.jpg',
-        } as SportsField,
-        owner: {} as User,
-        players: [{} as User],
-        schedule: '' as unknown as Date,
-        spotsLeft: 0,
-      } as Game;
       spyOn(gameService.game$, 'subscribe').and.callThrough();
       gameService.game$.next(mockGame);
       userService.token$.next(mockToken);
