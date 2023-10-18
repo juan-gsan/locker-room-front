@@ -1,4 +1,9 @@
+import { FormControl, FormGroup } from '@angular/forms';
 import { Game } from 'src/models/game';
+import { User } from 'src/models/user';
+import { GameType } from 'src/types/game.type';
+import { Gender } from 'src/types/gender';
+import { Level } from 'src/types/level';
 import { SportsField } from 'src/types/sports.field';
 
 export const mockUser = {
@@ -41,3 +46,28 @@ export const mockPartialGame = {
   schedule: '' as unknown as Date,
   spotsLeft: 0,
 } as unknown as Game;
+
+export const formGroup: FormGroup = new FormGroup({
+  location: new FormControl(''),
+  schedule: new FormControl(''),
+  gameType: new FormControl(''),
+  level: new FormControl(null),
+  gender: new FormControl(''),
+});
+
+export const mockCurrentGameData = {
+  spotsLeft: 20,
+  owner: {} as User,
+  players: [{}],
+  id: 'test',
+  location: {
+    name: 'Test Location',
+    avatar: 'test',
+    id: 'test',
+    location: 'Test Location',
+  },
+  schedule: {} as Date,
+  gameType: 'f11' as GameType,
+  level: 1 as Level,
+  gender: 'female' as Gender,
+};
