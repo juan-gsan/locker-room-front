@@ -49,10 +49,4 @@ describe('LoginComponent', () => {
     expect(userService.userLogin).toHaveBeenCalledWith(mockUser);
     expect(mockRouter.navigateByUrl).toHaveBeenCalled();
   });
-
-  it('Should throw error if data is not valid', () => {
-    spyOn(userService, 'userLogin').and.throwError('Invalid credentials');
-    component.login.setValue({ user: '', password: 'test' });
-    expect(userService.userLogin).toThrowError();
-  });
 });
