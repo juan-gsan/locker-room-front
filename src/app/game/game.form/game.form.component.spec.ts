@@ -1,14 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GameFormComponent } from './game.form.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { MenuComponent } from 'src/app/menu/menu.component';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
@@ -16,11 +10,7 @@ import {
 } from '@angular/router';
 import { GameService } from 'src/app/services/game.service';
 import { of } from 'rxjs';
-import { Game } from 'src/models/game';
-import { SportsField } from 'src/types/sports.field';
-import { User } from 'src/models/user';
-import Swal from 'sweetalert2';
-import { mockGame } from 'src/mocks/mocks';
+import { formGroup, mockCurrentGameData, mockGame } from 'src/mocks/mocks';
 
 describe('GameFormComponent', () => {
   let component: GameFormComponent;
@@ -37,32 +27,7 @@ describe('GameFormComponent', () => {
   };
 
   const mockGameService = {
-    getGame: jasmine.createSpy('getGame').and.returnValue(
-      of({
-        id: 'test',
-        gameType: 'f11',
-        gender: 'female',
-        level: 1,
-        location: {
-          id: '4',
-          name: 'CD Municipal La Chopera',
-          location: 'Paseo de Fernán Núñez 3, 28009 Madrid',
-          avatar: 'assets/field04.jpg',
-        } as SportsField,
-        owner: {
-          id: 'test',
-          userName: 'test',
-          email: 'email@example.com',
-          password: 'password',
-          level: 1,
-          gender: 'female',
-          avatar: { url: '', urlOriginal: '', mimetype: '', size: 1 },
-        } as User,
-        players: [{} as unknown as User],
-        schedule: '' as unknown as Date,
-        spotsLeft: 0,
-      } as Game)
-    ),
+    getGame: jasmine.createSpy('getGame').and.returnValue(of(mockGame)),
     createGame: jasmine.createSpy('createGame').and.returnValue(of(mockGame)),
     editGame: jasmine.createSpy('editGame').and.returnValue(of(mockGame)),
   };
@@ -124,66 +89,19 @@ describe('GameFormComponent', () => {
 
   it('should call getGame when getCurrentGameData is called', () => {
     component.isNew = false;
-    const mockCurrentGameData = {
-      id: 'test',
-      gameType: 'f11',
-      gender: 'female',
-      level: 1,
-      location: {
-        id: '4',
-        name: 'CD Municipal La Chopera',
-        location: 'Paseo de Fernán Núñez 3, 28009 Madrid',
-        avatar: 'assets/field04.jpg',
-      } as SportsField,
-      owner: {
-        id: 'test',
-        userName: 'test',
-        email: 'email@example.com',
-        password: 'password',
-        level: 1,
-        gender: 'female',
-        avatar: { url: '', urlOriginal: '', mimetype: '', size: 1 },
-      } as User,
-      players: [{} as unknown as User],
-      schedule: '' as unknown as Date,
-      spotsLeft: 0,
-    } as Game;
 
     const mockGetFormInitialValues = spyOn(component, 'getFormInitialValues');
     component.getCurrentGameData();
 
     gameService.getGame(mockRoute.snapshot.params['id']).subscribe((data) => {
-      expect(mockCurrentGameData).toEqual(data);
+      expect(mockGame).toEqual(data);
       expect(mockGetFormInitialValues).toHaveBeenCalled();
     });
   });
 
   it('Should get initial values when getFormInitialValues is called', () => {
-    const formGroup: FormGroup = new FormGroup({
-      location: new FormControl(''),
-      schedule: new FormControl(''),
-      gameType: new FormControl(''),
-      level: new FormControl(null),
-      gender: new FormControl(''),
-    });
     component.game = formGroup;
-
-    component.currentGameData = {
-      spotsLeft: 20,
-      owner: {} as User,
-      players: [{}],
-      id: 'test',
-      location: {
-        name: 'Test Location',
-        avatar: 'test',
-        id: 'test',
-        location: 'Test Location',
-      },
-      schedule: {} as Date,
-      gameType: 'f11',
-      level: 1,
-      gender: 'female',
-    };
+    component.currentGameData = mockCurrentGameData;
 
     component.getFormInitialValues();
 
@@ -197,14 +115,7 @@ describe('GameFormComponent', () => {
   });
 
   it('Should create a game when handleGame is called and it is new', () => {
-    const formGroup: FormGroup = new FormGroup({
-      location: new FormControl(''),
-      schedule: new FormControl(''),
-      gameType: new FormControl(''),
-      level: new FormControl(null),
-      gender: new FormControl(''),
-    });
-
+    component.isNew = true;
     component.game = formGroup;
     component.currentGameData = mockGame;
     component.handleGame();
@@ -213,14 +124,6 @@ describe('GameFormComponent', () => {
   });
 
   it('Should edit game when handleGame is called and it is not new', () => {
-    const formGroup: FormGroup = new FormGroup({
-      location: new FormControl(''),
-      schedule: new FormControl(''),
-      gameType: new FormControl(''),
-      level: new FormControl(null),
-      gender: new FormControl(''),
-    });
-
     component.isNew = false;
     component.game = formGroup;
     component.currentGameData = mockGame;
