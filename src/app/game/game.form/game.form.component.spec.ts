@@ -15,7 +15,6 @@ import { formGroup, mockCurrentGameData, mockGame } from 'src/mocks/mocks';
 describe('GameFormComponent', () => {
   let component: GameFormComponent;
   let fixture: ComponentFixture<GameFormComponent>;
-  let router: Router;
   let route: ActivatedRoute;
   let gameService: GameService;
 
