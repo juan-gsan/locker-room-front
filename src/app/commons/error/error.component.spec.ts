@@ -6,9 +6,9 @@ describe('ErrorComponent', () => {
   let component: ErrorComponent;
   let fixture: ComponentFixture<ErrorComponent>;
 
-  const mockLocation = jasmine
-    .createSpy('location')
-    .and.returnValue({ back: jasmine.createSpy('back') });
+  const mockLocation = {
+    back: jasmine.createSpy('back'),
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,5 +23,12 @@ describe('ErrorComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('When navigateBack is called', () => {
+    it('Should call location', () => {
+      component.navigateBack();
+      expect(mockLocation.back).toHaveBeenCalled();
+    });
   });
 });

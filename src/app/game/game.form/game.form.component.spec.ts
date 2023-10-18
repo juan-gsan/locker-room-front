@@ -3,17 +3,29 @@ import { GameFormComponent } from './game.form.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MenuComponent } from 'src/app/menu/menu.component';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  Router,
+} from '@angular/router';
 import { GameService } from 'src/app/services/game.service';
 import { of } from 'rxjs';
 import { Game } from 'src/models/game';
 import { SportsField } from 'src/types/sports.field';
 import { User } from 'src/models/user';
+import Swal from 'sweetalert2';
+import { mockGame } from 'src/mocks/mocks';
 
 describe('GameFormComponent', () => {
   let component: GameFormComponent;
   let fixture: ComponentFixture<GameFormComponent>;
+  let router: Router;
   let route: ActivatedRoute;
   let gameService: GameService;
 
@@ -51,15 +63,17 @@ describe('GameFormComponent', () => {
         spotsLeft: 0,
       } as Game)
     ),
+    createGame: jasmine.createSpy('createGame').and.returnValue(of(mockGame)),
+    editGame: jasmine.createSpy('editGame').and.returnValue(of(mockGame)),
+  };
+
+  const mockRouter = {
+    navigateByUrl: jasmine.createSpy('navigateByUrl'),
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        ReactiveFormsModule,
-      ],
+      imports: [HttpClientTestingModule, ReactiveFormsModule],
       declarations: [GameFormComponent, MenuComponent],
       providers: [
         GameFormComponent,
@@ -69,6 +83,7 @@ describe('GameFormComponent', () => {
           useValue: mockRoute,
         },
         { provide: GameService, useValue: mockGameService },
+        { provide: Router, useValue: mockRouter },
       ],
     }).compileComponents();
 
@@ -141,5 +156,76 @@ describe('GameFormComponent', () => {
       expect(mockCurrentGameData).toEqual(data);
       expect(mockGetFormInitialValues).toHaveBeenCalled();
     });
+  });
+
+  it('Should get initial values when getFormInitialValues is called', () => {
+    const formGroup: FormGroup = new FormGroup({
+      location: new FormControl(''),
+      schedule: new FormControl(''),
+      gameType: new FormControl(''),
+      level: new FormControl(null),
+      gender: new FormControl(''),
+    });
+    component.game = formGroup;
+
+    component.currentGameData = {
+      spotsLeft: 20,
+      owner: {} as User,
+      players: [{}],
+      id: 'test',
+      location: {
+        name: 'Test Location',
+        avatar: 'test',
+        id: 'test',
+        location: 'Test Location',
+      },
+      schedule: {} as Date,
+      gameType: 'f11',
+      level: 1,
+      gender: 'female',
+    };
+
+    component.getFormInitialValues();
+
+    expect(formGroup.value).toEqual({
+      location: 'Test Location',
+      schedule: {} as Date,
+      gameType: 'f11',
+      level: 1,
+      gender: 'female',
+    });
+  });
+
+  it('Should create a game when handleGame is called and it is new', () => {
+    const formGroup: FormGroup = new FormGroup({
+      location: new FormControl(''),
+      schedule: new FormControl(''),
+      gameType: new FormControl(''),
+      level: new FormControl(null),
+      gender: new FormControl(''),
+    });
+
+    component.game = formGroup;
+    component.currentGameData = mockGame;
+    component.handleGame();
+
+    expect(gameService.createGame).toHaveBeenCalled();
+  });
+
+  it('Should edit game when handleGame is called and it is not new', () => {
+    const formGroup: FormGroup = new FormGroup({
+      location: new FormControl(''),
+      schedule: new FormControl(''),
+      gameType: new FormControl(''),
+      level: new FormControl(null),
+      gender: new FormControl(''),
+    });
+
+    component.isNew = false;
+    component.game = formGroup;
+    component.currentGameData = mockGame;
+    component.handleGame();
+
+    expect(gameService.editGame).toHaveBeenCalled();
   });
 });
